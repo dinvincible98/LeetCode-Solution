@@ -1,0 +1,65 @@
+524. Longest Word in Dictionary through Deleting
+
+C++:
+
+class Solution {
+public:
+bool strDeleteMatching(string s, string p)
+{
+    int i = 0, j = 0, m = (int)s.length(), n = (int)p.length();
+    while(i < m && j < n)
+    {
+        while (i < m && s[i] != p[j]) i++;
+        if (i < m && s[i] == p[j])
+        {
+            i++;
+            j++;
+        }
+    }
+    if (j == n) return true;
+    else return false;
+}
+string findLongestWord(string s, vector<string>& d) {
+    string res = "";
+    int n = (int)d.size(), maxLen = 0, maxPos = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (d[i].length() < maxLen) continue;
+        if (strDeleteMatching(s, d[i]) && (d[i].length() > maxLen || (d[i].length() == maxLen && d[i] < d[maxPos])))
+        {
+            maxPos = i;
+            maxLen = (int)d[i].length();
+        }
+    }
+    if (maxPos != -1) res = d[maxPos];
+    return res;
+}
+};
+
+Python:
+
+class Solution(object):
+    def isSubsquence(self, main_string, suspect):
+        i = 0
+        j = 0
+        n, m = len(main_string), len(suspect)
+        while i<n and j<m:
+            if main_string[i] == suspect[j]:
+                j+=1
+            
+            i+=1
+        return j==m
+        
+    
+    def findLongestWord(self, s, d):
+        """
+        :type s: str
+        :type d: List[str]
+        :rtype: str
+        """
+        max_string = ""
+        for word in d:
+            if self.isSubsquence(s,word):
+                if len(word) > len(max_string) or (len(word)==len(max_string) and word < max_string):
+                    max_string = word
+        return max_string 

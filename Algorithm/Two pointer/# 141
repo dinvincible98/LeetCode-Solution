@@ -1,0 +1,50 @@
+# 141. Linked List Cycle
+
+C++:
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if (head == NULL)  return false;
+        ListNode* slow = head, *fast = head->next;
+        while(fast && fast->next){
+            if (slow == fast) return true;
+                slow = slow->next;
+                fast = fast->next->next;
+        }
+        return false;
+    }
+};
+
+
+Python:
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if head is None or head.next is None:
+            return False
+        node = head
+        node2 = head.next
+        while(node != node2):
+            if node2 is None or node2.next is None:
+                return False
+            node = node.next
+            node2 = node2.next.next
+        return True
