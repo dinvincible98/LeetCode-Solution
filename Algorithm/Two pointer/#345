@@ -1,0 +1,136 @@
+# 345. Reverse Vowels of a String
+
+C++:
+
+class Solution {
+public:
+    string reverseVowels(string s) {
+        
+        int left = 0, right = s.size()-1;
+        while(left < right){
+            if (isVowel(s[left]) == true && isVowel(s[right]) == true){
+                swap(s[left],s[right]);
+                left++;
+                right--;
+            }
+            else if (isVowel(s[left]) == false){
+                left++;
+            }
+            else{
+                right--;
+            }
+        }
+        return s;
+    } 
+      
+    bool isVowel(char s){
+        s = tolower(s);
+        if (s=='a'||s=='e'||s=='i'||s=='o'||s=='u'){
+            return true;
+        }
+        return false;
+    }
+};
+
+
+
+Python:
+
+class Solution(object):
+    def reverseVowels(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        vowels = ['a','e','i','o','u','A','E','I','O','U']
+        s = [char for char in s]
+        left = 0
+        right = len(s) - 1
+        while (left < right):
+            if s[left] not in vowels:
+                left += 1
+            elif s[right] not in vowels:
+                right -= 1
+            else:
+                s[left],s[right] = s[right],s[left]
+                left += 1
+                right -= 1
+        
+        return "".join(s)
+
+C:
+bool isVowel(char c){
+        if ((c=='A'|| c=='a')||
+            (c=='E'|| c=='e')||
+            (c=='I'|| c=='i')||
+            (c=='O'|| c=='o')||
+            (c=='U'|| c=='u'))    
+            return true; 
+        return false;
+    }
+
+char * reverseVowels(char * s){
+	if (s == NULL)
+		return NULL;
+
+	int left = 0;
+	int right = strlen(s) - 1;
+
+	while (left < right)
+	{
+		if (!isVowel(s[left]))
+			left++;
+		if (!isVowel(s[right]))
+			right--;
+
+		if (isVowel(s[left]) && isVowel(s[right]))
+		{
+			char temp = s[left];
+			s[left] = s[right];
+			s[right] = temp;
+
+			left++;
+			right--;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
