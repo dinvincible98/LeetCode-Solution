@@ -1,0 +1,46 @@
+215. Kth Largest Element in an Array
+
+Input: [3,2,1,5,6,4] and k = 2
+Output: 5
+
+C++ : 
+#1:
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        std::sort(nums.begin(),nums.end());
+        std::reverse(nums.begin(),nums.end());
+        return nums[k-1];
+        }
+            
+};
+
+#2:
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        for (int i=0;i<k;++i){
+            int localMax = i;
+            for (int j=i+1; j<nums.size();++j){
+                if (nums[j] > nums[localMax]) localMax=j;
+            }
+            swap(nums[i],nums[localMax]);
+        }
+        return nums[k-1];
+    }
+};
+
+Python:
+
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        for i in range(k):
+            for j in range(len(nums) - i - 1):
+                if nums[j] > nums[j+1]:
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+        return nums[len(nums)-k]

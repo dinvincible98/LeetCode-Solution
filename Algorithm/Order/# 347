@@ -1,0 +1,47 @@
+347. Top K Frequent Elements
+
+C++:
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        priority_queue<pair<int,int>> pq;
+        unordered_map<int,int> mp;
+        vector<int> res;
+        
+        for (int i=0;i<nums.size();i++){
+            mp[nums[i]] += 1;
+        }
+        for (auto i : mp){
+            pq.push(make_pair(i.second,i.first));
+        }
+        for (int i=0;i<k;i++){
+            res.push_back(pq.top().second);
+            pq.pop();
+        }
+        
+        return res;
+    }
+};
+
+
+
+Python:
+
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        items = {}
+        for i in nums:
+            if items.has_key(i):
+                items[i]+=1
+            else:
+                items[i]=1
+        arr1=sorted(items.iteritems(), key=lambda asd:asd[1], reverse=True)
+        arr2=[]
+        for key in range(len(arr1)):
+            arr2.append(arr1[key][0])
+        return arr2[0:k]    
