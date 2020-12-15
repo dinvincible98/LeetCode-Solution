@@ -1,0 +1,64 @@
+452. Minimum Number of Arrows to Burst Balloons
+
+C++:
+
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        int n = points .size() ; 
+        
+        if ( !n )
+                return 0 ; 
+        vector < pair < int , int >  > v ; 
+        
+        for( int i = 0 ; i < n ; i ++ )
+        {
+            v.push_back ( { points [ i] [ 0] , points [ i ][ 1 ] } ) ;
+        }
+        
+        sort ( v.begin() , v.end() ) ; 
+        int ans =0 ; 
+
+        int start  = INT_MIN ; 
+        int end = INT_MAX ; 
+        for ( int i = 0 ; i < n ; i ++ )
+        {
+            
+            if ( v [ i ].first <= end )
+            {
+                start = max ( start , v [ i ].first ) ; 
+                end = min ( end , v [ i ].second ) ; 
+                
+            }
+            else 
+            {
+                ans ++ ; 
+                start = v [ i ].first ; 
+                end = v [ i ].second ; 
+            }
+                    
+        }
+        ans ++ ; 
+        return ans ;
+        
+    }
+};
+
+
+
+Python:
+
+class Solution(object):
+    def findMinArrowShots(self, points):
+        """
+        :type points: List[List[int]]
+        :rtype: int
+        """
+        count = 0
+        end = float("-inf")
+        points.sort(key=lambda x:x[1])
+        for i in range(len(points)):
+            if end < points[i][0]:
+                end = points[i][1]
+                count+=1
+        return count

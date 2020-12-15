@@ -1,0 +1,47 @@
+455. Assign Cookies
+
+C++:
+
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        std::sort(g.begin(),g.end());
+        std::sort(s.begin(),s.end());
+        int count = 0;
+        int si = 0;
+        for (int i=0;i<g.size();i++){
+            while (si<s.size() && s[si]<g[i]){
+                si++;   
+            }
+            if (si == s.size())   break;
+            si++;
+            count++;
+        }
+        return count;
+    }
+};
+
+
+Python:
+
+class Solution(object):
+    def findContentChildren(self, g, s):
+        """
+        :type g: List[int]
+        :type s: List[int]
+        :rtype: int
+        """
+        g.sort()
+        s.sort()
+        count = 0
+        si = 0
+        for greedy in g:
+            while si<len(s) and s[si]<greedy:
+                si+=1
+            if si==len(s):
+                break
+            si+=1
+            count+=1
+        
+        return count
+        

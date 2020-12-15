@@ -1,0 +1,59 @@
+435. Non-overlapping Intervals
+
+C++:
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        int numberofNonOverlapping = 0;
+        int prevFinishtime = INT_MIN;
+        sort(intervals.begin(), intervals.end(), [&](const auto& a, const auto& b){
+                return a[1] < b[1];
+        });
+        for(auto& in : intervals){
+            if(in[0] >= prevFinishtime){
+                numberofNonOverlapping++;
+                prevFinishtime = in[1];
+            }
+        }
+        return intervals.size() - numberofNonOverlapping;
+    }
+};
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        int count = 0;
+        int end = INT_MIN;
+        sort(intervals.begin(), intervals.end(), [&](const auto& a, const auto& b){
+                return a[1] < b[1];
+        });
+        for(auto& in : intervals){
+            if(in[0] >= end){
+                end = in[1];
+            }
+            else{
+                count+=1;
+            }
+        }
+        return count;
+    }
+};
+
+
+Python:
+
+class Solution(object):
+    def eraseOverlapIntervals(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: int
+        """
+        end = float('-inf')
+        count = 0
+        for s, e in sorted(intervals, key=lambda x: x[1]):
+            if s >= end:
+                end = e
+            else:
+                count+=1
+        return count
