@@ -1,0 +1,44 @@
+392. Is Subsequence
+
+C++:
+
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int m = s.size(), n = t.size();
+        if (m > n)  return false;
+        if (m == 0) return true;
+        int i = 0, j = 0;
+        while(i<m && j<n){
+            if (t[j] != s[i])   j++;
+            else    i++,j++;
+        }
+        return i==m;
+    }
+};
+
+
+Python:
+
+class Solution(object):
+    def isSubsequence(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        m = len(s)
+        n = len(t)
+        if m > n:
+            return False
+        if m == 0:
+            return True
+        i = 0
+        j = 0
+        while i<m and j<n:
+            if t[j] != s[i]:
+                j+=1
+            else:
+                i+=1
+                j+=1
+        return i==m
