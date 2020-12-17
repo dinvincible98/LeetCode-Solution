@@ -1,0 +1,48 @@
+763. Partition Labels
+
+C++:
+
+class Solution {
+public:
+    vector<int> partitionLabels(string S) {
+        vector<int> res;
+        vector<int> mp(26,-1);
+        for (int i=0;i<S.size();++i){
+            mp[S[i]-'a'] = i;
+        }
+        int i = 0;
+        while(i < S.size()){
+            int  end = mp[S[i]-'a'];
+            for (int j=i+1;j<end;++j){
+                if (mp[S[j]-'a'] > end) end = mp[S[j]-'a'];
+            }
+            res.push_back(end-i+1);
+            i = end+1;
+        }
+        return res;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def partitionLabels(self, S):
+        """
+        :type S: str
+        :rtype: List[int]
+        """
+        last_idx = {c: i for i, c in enumerate(S)}
+        output = []
+        curr_length = 0
+        max_idx = 0
+        
+        for i, c in enumerate(S):
+            if curr_length == 0:
+                max_idx = last_idx[c]
+            if i == max_idx:
+                output.append(curr_length+1)
+                curr_length=0
+            else:
+                max_idx = max(max_idx, last_idx[c])
+                curr_length+=1
+        return output
