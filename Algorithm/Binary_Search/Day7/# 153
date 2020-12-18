@@ -1,0 +1,37 @@
+153. Find Minimum in Rotated Sorted Array
+
+C++:
+
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int left = 0, right = nums.size()-1;
+        while(left+1<right){
+            int mid = (left+right)/2;
+            if (nums[mid]>nums[right])  left = mid;
+            else    right = mid;
+        }
+        if (nums[left]<nums[right]) return nums[left];
+        else    return nums[right];
+    }
+};
+
+
+Python:
+
+class Solution(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        left = 0
+        right = len(nums)-1
+        while left+1 < right:
+            mid = (left+right) // 2
+            if nums[mid] > nums[right]:
+                left = mid
+            else:
+                right = mid
+        if nums[left]<nums[right]:  return nums[left]
+        else:   return nums[right]

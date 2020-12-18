@@ -44,4 +44,24 @@ class Solution(object):
         arr2=[]
         for key in range(len(arr1)):
             arr2.append(arr1[key][0])
+        return arr2[0:k]
+        
+
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        dic = {}
+        for i in nums:
+            if i in dic.keys():
+                dic[i]+=1
+            else:
+                dic[i]=1
+        arr1 = sorted(dic.items(),key=lambda x:x[1],reverse=True)
+        arr2 = []
+        for j in range(len(arr1)):
+            arr2.append(arr1[j][0])
         return arr2[0:k]    

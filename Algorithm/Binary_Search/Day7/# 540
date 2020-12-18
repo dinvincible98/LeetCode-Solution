@@ -1,0 +1,44 @@
+540. Single Element in a Sorted Array
+
+C++:
+
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int start = 0, end = nums.size()-1;
+        while(start < end){
+            int mid = start + (end-start)/2;
+            if((mid%2!=0 && nums[mid]==nums[mid-1])||(mid%2==0 && nums[mid]==nums[mid+1])){
+                start = mid+1;
+            }
+            else    end = mid;
+        }
+        return nums[start];
+    }
+};
+
+Python:
+
+class Solution(object):
+    def singleNonDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        start = 0
+        end = len(nums)-1
+        while start<=end:
+            mid = (start+end) / 2
+            mid_num = nums[mid]
+            left = nums[mid-1] if mid > 0 else None
+            right = nums[mid+1] if mid < end else None
+            
+            if mid_num!=left and mid_num!=right:
+                return mid_num
+            
+            if mid%2 == 0 and mid_num==right:
+                start = mid+2
+            elif mid%2!=0 and mid_num==left:
+                start= mid+1
+            else:
+                end = mid - 1
