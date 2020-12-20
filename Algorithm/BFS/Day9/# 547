@@ -1,0 +1,49 @@
+547. Friend Circles
+
+C++:
+
+class Solution {
+public:
+    void dfs(vector<vector<int>>& M, int i, vector<bool>& visited){
+        for (int j=0;j<M.size();++j){
+            if (M[i][j]==1 && !visited[j]){
+                visited[j] = true;
+                dfs(M,j,visited);
+            }
+        }
+    }
+    int findCircleNum(vector<vector<int>>& M) {
+        vector<bool> visited(M.size(),false);
+        int res = 0;
+        for (int i=0;i<M.size();++i){
+            if (!visited[i]){
+                visited[i] = true;
+                dfs(M, i, visited);
+                res++;
+            }
+        }
+        return res;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def dfs(self, M, i, visited):
+        visited[i] = True
+        for j in range(len(M[i])):
+            if M[i][j]==1 and not visited[j]:
+                self.dfs(M, j, visited)
+    
+    def findCircleNum(self, M):
+        """
+        :type M: List[List[int]]
+        :rtype: int
+        """
+        visited = [False]*len(M)
+        circle = 0
+        for i in range(len(M)):
+            if not visited[i]:
+                self.dfs(M, i, visited)
+                circle+=1
+        return circle

@@ -1,0 +1,68 @@
+241. Different Ways to Add Parentheses
+
+C++:
+
+class Solution {
+    unordered_map<string,vector<int>> pre_res;
+public:
+    int evaluate(char op, int a, int b){
+        switch(op){
+            case '+':
+                return a+b;
+            case '-':
+                return a-b;
+            case '*':
+                return a*b;
+        }
+        return 0;
+    }
+        
+        
+    vector<int> diffWaysToCompute(string input) {
+        if (pre_res.find(input) != pre_res.end()) return pre_res[input];
+        if (input.size()==0)    return {};
+        
+        vector<int> res;
+        for (int i=0;i<input.size();++i){
+            char op = input[i];
+            if (op=='+' || op=='-' || op=='*'){
+                vector<int> left_res = diffWaysToCompute(input.substr(0,i));
+                vector<int> right_res = diffWaysToCompute(input.substr(i+1));
+                for (int left : left_res){
+                    for (int right : right_res)
+                        res.push_back(evaluate(op,left,right));
+                }
+            }
+        }
+        if (res.size()==0)  res.push_back(stoi(input));
+        pre_res[input] = res;
+        return res;          
+    }
+};
+
+Python:
+
+class Solution(object):
+    def diffWaysToCompute(self, input):
+        """
+        :type input: str
+        :rtype: List[int]
+        """
+        if len(input) == 0:
+            return []
+        if input.isnumeric():
+            return [int(input)]
+        
+        res = []
+        for i in range(len(input)):
+            if input[i] in ['+','-','*']:
+                left_res = self.diffWaysToCompute(input[:i])
+                right_res = self.diffWaysToCompute(input[(i+1):])
+                
+                if input[i]=='+':
+                    res += [left+right for left in left_res for right in right_res]
+                elif input[i]=='-':
+                    res += [left-right for left in left_res for right in right_res]                
+                else:
+                    res += [left*right for left in left_res for right in right_res]                
+        return res

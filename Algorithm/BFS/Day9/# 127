@@ -1,0 +1,64 @@
+127. Word Ladder
+
+C++:
+
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dict(wordList.begin(),wordList.end());
+        unordered_map<string, int> mp;
+        if (beginWord == endWord)   return 1;
+        if (dict.count(endWord) == 0) return 0;
+        mp[beginWord] = 1;
+        queue<string> que;
+        que.push(beginWord);
+        while(!que.empty()){
+            string cur = que.front();
+            que.pop();
+            for (int i=0;i<cur.size();++i){
+                for (int j='a';j<='z';++j){
+                    string temp = cur;
+                    temp[i] = j;
+                    if (temp == endWord){
+                        return mp[cur]+1;
+                    }
+                    if (dict.count(temp) && !mp.count(temp)){
+                        mp[temp] = mp[cur]+1;
+                        que.push(temp);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+        """
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: int
+        """
+        s = set(wordList)
+        if endWord not in s:
+            return 0
+        q = deque()
+        q.append((beginWord, 1))
+        v = set()
+        while q:
+            word, dep = q.popleft()
+            if word == endWord:
+                return dep
+            # w * 26 => w
+            for i in range(len(word)):
+                for c in 'abcdefghijklmnopqrstuvwxyz':
+                    w = word[0:i] + c + word[i+1:len(word)]
+                    if w in s and w not in v:
+                        v.add(w)
+                        q.append((w, dep+1))
+        
+        return 0

@@ -1,0 +1,40 @@
+334. Increasing Triplet Subsequence
+
+C++:
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int left = INT_MAX, right = INT_MAX;
+        for (auto i:nums){
+            if (i==left || i ==right)    continue;
+            if (i < left)   left = i;
+            else if (i < right) right = i;
+            else   return true;
+        }
+        return false;
+    }
+};
+
+
+
+
+Python:
+
+class Solution(object):
+    def increasingTriplet(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        left, right = float('inf'), float('inf')
+        for i in nums:
+            if i == left or i == right:
+                continue
+            if i < left:
+                left = i
+            elif i<right:
+                right = i
+            else:
+                return True
+        return False

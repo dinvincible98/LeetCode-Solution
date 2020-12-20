@@ -1,21 +1,15 @@
-A = [1,2]
-B = [-2,-1]
-C = [-1,2]
-D = [0,2]
-dic = {}
-count = 0
-for i in A:
-    for j in B:
-        Sum = i+j
-        if Sum in dic:
-            dic[Sum]+=1
-        else:
-            dic[Sum]=1
-print(dic)
+from collections import deque
+queue = deque([(1,0),(0,0),(0,1)])
+print(queue.popleft())
 
-for i in C:
-    for j in D:
-        target = 0 - (i+j)
-        if target in dic:
-            count += dic[target]
-print(count)
+a = [chr(i) for i in range(ord('a'), ord('z') + 1)]
+print(a)
+
+b = (1,2,3)
+c = (4,5,6)
+d = zip(b,c)
+for i, j in d:
+    print(i)
+    print(j)
+e = [False] * 3
+print(e)
