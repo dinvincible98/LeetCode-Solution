@@ -1,0 +1,67 @@
+17. Letter Combinations of a Phone Number
+
+C++:
+
+class Solution {
+public:
+    vector<string> res;
+    map<char, string> mp;
+    
+    void backtrack(int i,string digits, string comps){
+        if (i==digits.size()){
+            res.push_back(comps);
+            return;
+        }
+        for (int j=0;j<mp[digits[i]].size();++j){
+            backtrack(i+1, digits, comps+mp[digits[i]][j]);
+        }
+    }
+    
+    
+    vector<string> letterCombinations(string digits) {
+        mp['2'] = "abc";
+        mp['3'] = "def";
+        mp['4'] = "ghi";
+        mp['5'] = "jkl";
+        mp['6'] = "mno";
+        mp['7'] = "pqrs";
+        mp['8'] = "tuv";
+        mp['9'] = "wxyz";
+        if (digits.empty()) return {};
+        backtrack(0,digits,"");
+        return res;
+        
+    }
+};
+
+
+
+Python:
+
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        if len(digits)==0: return []
+        res = []
+        map = {'2':['a','b','c'],
+               '3':['d','e','f'],
+               '4':['g','h','i'],
+               '5':['j','k','l'],
+               '6':['m','n','o'],
+               '7':['p','q','r','s'],
+               '8':['t','u','v'],
+               '9':['w','x','y','z']
+                }
+        
+        def backtrack(num_remaining, string):
+            if len(num_remaining) == 0:
+                res.append(string)
+                return
+            next_num, last_num = num_remaining[0],num_remaining[1:]
+            for i in map[next_num]:
+                backtrack(last_num,string+i)
+        backtrack(digits,"")
+        return res

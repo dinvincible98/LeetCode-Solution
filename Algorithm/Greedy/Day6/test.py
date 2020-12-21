@@ -13,3 +13,6 @@ for i, j in d:
     print(j)
 e = [False] * 3
 print(e)
+S = "ababcbacadefegdehijhklij"
+last_idx = {c: i for i, c in enumerate(S)}
+print(last_idx)

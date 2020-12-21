@@ -1,0 +1,77 @@
+417. Pacific Atlantic Water Flow
+
+C++:
+
+class Solution {
+public:
+    void dfs(vector<vector<int>>& grid, vector<vector<int>>& seen, int val, int prev, int i, int j, vector<vector<int>>& res){
+        if(i<0 || j<0 || i>=grid.size() || j>=grid[0].size() || seen[i][j]==val || grid[i][j]<prev)  return;
+        if (seen[i][j] != 0)    res.push_back({i,j});
+        seen[i][j] = val;
+        dfs(grid,seen,val,grid[i][j],i+1,j,res);
+        dfs(grid,seen,val,grid[i][j],i-1,j,res);
+        dfs(grid,seen,val,grid[i][j],i,j+1,res);
+        dfs(grid,seen,val,grid[i][j],i,j-1,res); 
+    }
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& matrix) {
+        if (matrix.empty()) return {};
+        vector<vector<int>> res,seen(matrix.size(),vector<int>(matrix[0].size(),0));
+        
+        for (int i=0;i<matrix.size();++i){
+            dfs(matrix,seen,1,0,i,0,res);
+        }
+        for (int j=0;j<matrix[0].size();++j){
+            dfs(matrix,seen,1,0,0,j,res);
+        }
+        
+        for (int k=0;k<matrix.size();++k){
+            dfs(matrix,seen,2,0,k,matrix[0].size()-1,res);
+        }
+        for (int l=0;l<matrix[0].size();++l){
+            dfs(matrix,seen,2,0,matrix.size()-1,l,res);
+        }
+        return res;
+        
+    }
+};
+
+class Solution(object):
+    def pacificAtlantic(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        def dfs(r,c,prev,ocean,grid):
+            ocean[r][c] = 1
+            directions = [(-1,0),(1,0),(0,-1),(0,1)]
+        
+            for x,y in directions:
+                nr,nc = x+r,y+c
+            
+                if nr >= 0 and nr < len(grid) and nc >= 0 and nc < len(grid[0]):
+                    
+                    if ocean[nr][nc] == 0 and grid[nr][nc] >= prev:
+                        dfs(nr,nc,grid[nr][nc],ocean,grid)
+            return
+            
+        if matrix == []:
+            return []
+        m = len(matrix)
+        n = len(matrix[0])
+        
+        pacific = [[0 for i in range(n)]for j in range(m)]
+        atlantic = [[0 for i in range(n)]for j in range(m)]
+
+        for j in range(n):
+            dfs(0,j,matrix[0][j],pacific,matrix)
+            dfs(m-1,j,matrix[m-1][j],atlantic,matrix)
+        for i in range(m):
+            dfs(i,0,matrix[i][0],pacific,matrix)
+            dfs(i,n-1,matrix[i][n-1],atlantic,matrix)
+
+        result = []
+        for i in range(m):
+            for j in range(n):
+                if pacific[i][j] and atlantic[i][j]:
+                    result.append((i,j))
+        return result

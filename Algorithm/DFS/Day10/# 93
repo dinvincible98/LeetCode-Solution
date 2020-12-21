@@ -1,0 +1,54 @@
+93. Restore IP Addresses
+
+C++:
+
+class Solution {
+public:
+    void backtrack(vector<string>& op, string s, int i, int count, string ip){
+        if (i>=s.size()){
+            if (count == 4){
+                ip.pop_back();
+                op.push_back(ip);
+            }
+            return;
+        }
+        backtrack(op,s,i+1,count+1,ip+s.substr(i,1)+'.');
+        if (i+1>=s.size() || s[i] == '0')   return;
+        backtrack(op,s,i+2,count+1,ip+s.substr(i,2)+'.');
+        if (i+2>=s.size() || s[i]=='0' || stoi(s.substr(i,3))>255)  return;
+        backtrack(op,s,i+3,count+1,ip+s.substr(i,3)+'.');
+        return;
+    }
+    vector<string> restoreIpAddresses(string s) {
+        vector<string> op;
+        if (s.size()>15)    return op;
+        backtrack(op,s,0,0,"");
+        return op;
+        
+    }
+};
+
+
+Python:
+
+class Solution(object):
+    def restoreIpAddresses(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        if not 4 <= len(s) <= 12:
+            return []
+        res = []
+        self.backtrack(s,0,"",res,0)
+        return res
+    
+    def backtrack(self, s, start, path, res, count):
+        if count==4:
+            if start==len(s):
+                res.append(path[1:])
+            return  
+        
+        for end in [start+1,start+2,start+3]:
+            if end<=len(s) and 0<=int(s[start:end])<=255 and str(int(s[start:end])) == s[start:end]:
+                self.backtrack(s,end,path+'.'+s[start:end],res,count+1)
