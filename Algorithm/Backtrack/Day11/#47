@@ -1,0 +1,48 @@
+47. Permutations II
+
+C++:
+
+class Solution {
+
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> perms;
+        permute(nums, 0, perms);
+        return perms;
+    }
+private:
+    void permute(vector<int> nums, int i, vector<vector<int>>& perms) {
+        if (i == nums.size()) {
+            perms.push_back(nums);
+        } else {
+            for (int j = i; j < nums.size(); j++) {
+                if (j == i || nums[j] != nums[i]) {
+                    swap(nums[i], nums[j]);
+                    permute(nums, i + 1, perms);
+                }
+            }
+        }
+    }
+};
+
+Python:
+
+class Solution(object):
+    def backtrack(self, nums, s, k):
+        if len(s)==k:
+            self.permutations.append(s[:])
+        for i in range(len(nums)):
+            if i>0 and nums[i]==nums[i-1]:
+                continue
+            s.append(nums[i])
+            self.backtrack(nums[:i]+nums[i+1:],s,k)
+            s.pop()
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.permutations = []
+        self.backtrack(sorted(nums),[],len(nums))
+        return self.permutations

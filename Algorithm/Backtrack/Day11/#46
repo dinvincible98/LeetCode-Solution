@@ -1,0 +1,53 @@
+46. Permutations
+
+C++:
+
+class Solution {
+public:
+    void backtrack (vector<int>& nums, vector<int>& permutation, vector<vector<int>>& permutations){
+        if (permutation.size() == nums.size()){
+            permutations.push_back(permutation);
+            return;
+        }
+        for (auto i:nums){
+            if (find(permutation.begin(),permutation.end(),i)!=permutation.end()) continue;
+            permutation.push_back(i);
+            backtrack(nums,permutation,permutations);
+            permutation.pop_back();
+            
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        if (nums.empty())   return {};
+        vector<int> permutation;
+        vector<vector<int>> permutations;
+        backtrack(nums,permutation,permutations);
+        return permutations;
+    }
+};
+
+class Solution(object):
+    
+    def backtrack(self, nums, permutation, permutations):
+        if len(permutation) == len(nums):
+            permutations.append(permutation[:])
+            return
+        for num in nums:
+            if num not in permutation:
+                permutation.append(num)
+                self.backtrack(nums,permutation,permutations)
+                permutation.pop()
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        if not nums:
+            return [[]]
+                        
+        permutation = []
+        permutations = []
+        self.backtrack(nums,permutation,permutations)
+        return permutations
+        
+        
