@@ -1,0 +1,55 @@
+40. Combination Sum II
+
+C++:
+
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        vector<int> path;
+        sort(candidates.begin(),candidates.end());
+        backtrack(res,path,0,candidates,target);
+        return res;
+    }
+private:
+    void backtrack(vector<vector<int>>& res, vector<int>& path, int start, vector<int>& candidates, int remain){
+        if (remain<0)   return;
+        else if (remain==0) res.push_back(path);
+        else{
+            for (int i=start;i<candidates.size();++i){
+                if (i>start && candidates[i]==candidates[i-1])  continue;
+                path.push_back(candidates[i]);
+                backtrack(res,path,i+1,candidates,remain-candidates[i]);
+                path.pop_back();
+            }
+        }
+    }
+};
+
+Python:
+
+class Solution(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        path = []
+        candidates.sort()
+        self.backtrack(res,path,0,candidates,target)
+        return res
+    
+    def backtrack(self, res, path, start, candidates, remain):
+        if remain<0:
+            return
+        elif remain==0:
+            res.append(path[:])
+        else:
+            for i in range(start,len(candidates)):
+                if i>start and candidates[i]==candidates[i-1]:  continue
+                path.append(candidates[i])
+                self.backtrack(res,path,i+1,candidates,remain-candidates[i])
+                path.pop()
+        

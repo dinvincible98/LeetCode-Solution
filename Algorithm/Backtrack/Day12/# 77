@@ -1,0 +1,48 @@
+77. Combinations
+
+C++:
+
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> res;
+        vector<int> path;
+        backtrack(res,path,1,n,k);
+        return res;
+    }
+private:
+    void backtrack(vector<vector<int>>& res, vector<int>& path, int start, int n, int k){
+        if (k == 0){
+            vector<int> temp = path;
+            res.push_back(temp);
+        }
+        for (int i=start;i<n+1;++i){
+            path.push_back(i);
+            backtrack(res,path,i+1,n,k-1);
+            path.pop_back();
+        }
+    }
+};
+
+Python:
+
+class Solution(object):
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        path = []
+        self.backtrack(res,path,1,n,k)
+        return res
+    
+    def backtrack(self, res, path, start, n, k):
+        if k==0:
+            res.append(path[:])
+        for i in range(start,n+1):
+            path.append(i)
+            self.backtrack(res,path,i+1,n,k-1)
+            path.pop()
+        

@@ -1,0 +1,51 @@
+90. Subsets II
+
+C++:
+
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> path;
+        sort(nums.begin(),nums.end());
+        backtrack(nums,0,path,res);
+        return res;
+    }
+private:
+    void backtrack(vector<int>& nums, int start, vector<int>& path, vector<vector<int>>& res){
+        res.push_back(path);
+        if (start>nums.size())  return;
+        for (int i=start;i<nums.size();++i){
+            if (i==start || nums[i]!=nums[i-1]){
+                path.push_back(nums[i]);
+                backtrack(nums,i+1,path,res);
+                path.pop_back();
+            }
+        }
+    }
+};
+
+Python:
+
+class Solution(object):
+    def subsetsWithDup(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.res = []
+        nums.sort()
+        path = []
+        self.backtrack(nums,0,path)
+        return self.res
+        
+        
+    
+    def backtrack(self, nums, start, path):
+        self.res.append(path)
+        if start>len(nums):
+            return
+        for i in range(start,len(nums)):
+            if i>start and nums[i]==nums[i-1]:  continue
+            self.backtrack(nums,i+1,path+[nums[i]])
+            

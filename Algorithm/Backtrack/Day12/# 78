@@ -1,0 +1,45 @@
+78. Subsets
+
+C++:
+
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> path;
+        backtrack(nums,0,path,res);
+        return res;
+    }
+private:
+    void backtrack(vector<int>& nums, int start, vector<int>& path, vector<vector<int>>& res){
+        if  (start == nums.size()){
+            res.push_back(path);
+            return;
+        } 
+        backtrack(nums,start+1,path,res);
+        path.push_back(nums[start]);
+        backtrack(nums,start+1,path,res);
+        path.pop_back();
+    }
+};
+
+Python:
+
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        path = []
+        self.backtrack(nums,0,path,res)
+        return res
+    
+    def backtrack(self, nums, start, path, res):
+        if start==len(nums):
+            res.append(path[:])
+            return
+    
+        self.backtrack(nums, start+1, path, res)
+        self.backtrack(nums, start+1, path+[nums[start]], res)

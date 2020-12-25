@@ -1,0 +1,74 @@
+51. N-Queens
+
+C++:
+
+class Solution {
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> res;
+        if(n<=0) return res;
+        else if(n==1){
+            vector<string> temp(1,"Q");
+            res.push_back(temp);
+            return res;
+        }
+        vector<string> mat(n, string(n,'.'));
+        vector<bool> col_used(n, false), diag_used_down(2*n-1, false), diag_used_up(2*n-1,false);
+        backtrack(mat,col_used,diag_used_down,diag_used_up,0,res);
+        return res;
+        
+    }
+private:
+    void backtrack(vector<string>& mat,vector<bool>& col_used,vector<bool>& diag_used_down, vector<bool>& diag_used_up, int idx, vector<vector<string>>& res){
+        int n = mat.size();
+        for (int i=0;i<n;++i){
+            if (col_used[i] || diag_used_down[idx+i] || diag_used_up[i-idx+n-1])    continue;
+            col_used[i] = diag_used_down[idx+i] = diag_used_up[i-idx+n-1] = true;
+            mat[idx][i] = 'Q';
+            if (idx==n-1){
+                res.push_back(mat);
+            }
+            else{
+                backtrack(mat,col_used,diag_used_down,diag_used_up,idx+1,res);
+            }
+            mat[idx][i] = '.';
+            col_used[i]=diag_used_down[idx+i]=diag_used_up[i-idx+n-1] = false; 
+        }
+    }
+};
+
+Python:
+
+class Solution(object):
+    def solveNQueens(self, n):
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """
+        self.ans = []
+        self.n = n
+        self.col = [False]*n
+        self.diag, self.codiag = set(), set()
+        board = [['.']*n for _ in range(n)]
+        self.backtrack(board,0)
+        return self.ans
+    
+    def backtrack(self,board,r):
+        if r==self.n:
+            arr = ["".join(row) for row in board]
+            self.ans.append(arr)
+            return
+        for c in range(self.n):
+            if self.canPlace(r,c):
+                board[r][c]='Q'
+                self.col[c]=True
+                self.diag.add(r+c)
+                self.codiag.add(r-c)
+                self.backtrack(board,r+1)
+                board[r][c]='.'
+                self.col[c]=False
+                self.diag.remove(r+c)
+                self.codiag.remove(r-c)
+    
+    def canPlace(self,r,c):
+        return not (self.col[c] or r+c in self.diag or r-c in self.codiag)

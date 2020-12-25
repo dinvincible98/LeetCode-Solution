@@ -1,0 +1,86 @@
+37. Sudoku Solver
+
+C++:
+
+class Solution {
+public:
+    bool rows[9][9] = {false};
+    bool cols[9][9] = {false};
+    bool boxes[9][9] = {false};
+    void solveSudoku(vector<vector<char>>& board) {
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                if(board[i][j] != '.'){
+                    rows[i][ board[i][j] - '1' ] = true;
+                    cols[j][ board[i][j] - '1' ] = true;
+                    boxes[ (i/3)*3 + j/3 ][ board[i][j] - '1' ] = true;
+                }
+            }
+        }
+    backtrack(board, 0, 0);
+    }
+    bool backtrack(vector<vector<char>>& board, int row, int col){
+        while(board[row][col] != '.'){
+            col++;
+            if(col >= 9){
+                col = 0;
+                row++;
+            }
+            if(row >= 9){
+                return true;
+            }
+        }
+        for(int i = 0; i < 9; i++){
+            if( rows[row][i] || cols[col][i] || boxes[ (row/3)*3 + col/3 ][i] ) continue;
+            board[row][col] = i + '1';
+            rows[row][i] = cols[col][i] = boxes[ (row/3)*3 + col/3 ][i] = true;
+            if(backtrack(board, row, col)) return true;
+            else{
+                board[row][col] = '.';
+                rows[row][i] = cols[col][i] = boxes[ (row/3)*3 + col/3 ][i] = false;
+            }
+        }
+        return false;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def solveSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: None Do not return anything, modify board in-place instead.
+        """
+        self.solve(board)
+    
+    
+    
+    def solve(self,board):
+        x,y = -1,-1
+        for row in range(0,len(board)):
+            for col in range(0,len(board[0])):
+                if board[row][col] == ".":
+                    x,y = row,col
+                    break
+                    
+        if x==-1:
+            return True
+        
+        temp = [str(i) for i in range(1,10)]
+        for row in range(0,9):
+            if board[row][y] in temp:
+                temp.remove(board[row][y])
+        for col in range(0,9):
+            if board[x][col] in temp:
+                temp.remove(board[x][col])
+        for row in range(x//3*3, x//3*3+3):
+            for col in range(y//3*3,y//3*3+3):
+                if board[row][col] in temp:
+                    temp.remove(board[row][col])
+        for i in temp:
+            board[x][y]=i
+            if self.solve(board):
+                return True
+            board[x][y]="."
+        return False
