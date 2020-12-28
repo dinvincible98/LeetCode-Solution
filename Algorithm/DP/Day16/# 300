@@ -1,0 +1,43 @@
+300. Longest Increasing Subsequence
+
+C++:
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> dp(nums.size(),1);
+        if (nums.empty())   return 0;
+        for (int i=1;i<nums.size();++i){
+            for (int j=0;j<i;++j){
+                if (nums[i]>nums[j]){
+                    dp[i] = max(dp[i],dp[j]+1);
+                }
+            }
+        }
+        int res = dp[0];
+        for (int k=0;k<dp.size();++k){
+            if (res<dp[k]){
+                res = dp[k];
+            }
+        }
+        return res;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        n = len(nums)
+        dp = [1]*n
+        for i in range(1,n):
+            for j in range(i):
+                if nums[i]>nums[j]:
+                    dp[i] = max(dp[i],dp[j]+1)
+        return max(dp)                          

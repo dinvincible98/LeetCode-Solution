@@ -1,0 +1,44 @@
+646. Maximum Length of Pair Chain
+  
+C++:
+  
+class Solution {
+public:
+    int findLongestChain(vector<vector<int>>& pairs) {
+        sort(pairs.begin(),pairs.end());
+        int n = pairs.size();
+        vector<int> dp(n,1);
+        for (int i=0;i<n;++i){
+            for (int j=0;j<i;++j){
+                if (pairs[i][0]>pairs[j][1]){
+                    dp[i] = max(dp[i], dp[j]+1);
+                }
+            }
+        }
+        int res = dp[0];
+        for (int k=0;k<dp.size();++k){
+            if (res < dp[k]){
+                res = dp[k];
+            }
+        }
+        return res;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def findLongestChain(self, pairs):
+        """
+        :type pairs: List[List[int]]
+        :rtype: int
+        """
+        pairs.sort()
+        n = len(pairs)
+        dp = [1]*n
+        for i in range(n):
+            for j in range(i):
+                if pairs[i][0]>pairs[j][1]:
+                    dp[i] = max(dp[i], dp[j]+1) 
+        return max(dp)
+                 
