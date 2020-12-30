@@ -1,0 +1,34 @@
+714. Best Time to Buy and Sell Stock with Transaction Fee
+
+C++:
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int buy = INT_MAX;
+        int sell = 0;
+        for(int i=0;i<prices.size();++i){
+            buy = min(buy, prices[i]-sell+fee);
+            sell = max(sell, prices[i]-buy);
+        }
+        return sell;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def maxProfit(self, prices, fee):
+        """
+        :type prices: List[int]
+        :type fee: int
+        :rtype: int
+        """
+        dp = [0]* (len(prices)+1)
+        min_buy = float('-inf')
+        for i in range(1, len(dp)):
+            dp[i] = max(dp[i-1], prices[i-1]-fee+min_buy)
+            min_buy = max(min_buy, dp[i-1]-prices[i-1])
+        return dp[-1]
+            
+        

@@ -1,0 +1,43 @@
+416. Partition Equal Subset Sum
+
+C++:
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int total = 0;
+        for (int i=0;i<nums.size();++i){
+            total+=nums[i];
+        }
+        if (total%2 != 0)   return false;
+        int target = floor(total/2);
+        vector<int> dp(target+1, false);
+        dp[0] = true;
+        
+        for (auto i:nums){
+            for (int j=target;j>i-1;--j){
+                dp[j] = dp[j] || dp[j-i];
+            }
+        }
+        return dp[target];
+    }
+};
+
+Python:
+
+class Solution(object):
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        total = sum(nums)
+        if total%2 != 0:
+            return False
+        target = total // 2
+        dp = [False] * (target+1)
+        dp[0] = True
+        for num in nums:
+            for i in range(target, num-1, -1):
+                dp[i]= dp[i] or dp[i-num]
+        return dp[target]

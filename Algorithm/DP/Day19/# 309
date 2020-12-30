@@ -1,0 +1,41 @@
+309. Best Time to Buy and Sell Stock with Cooldown
+
+C++:
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        vector<int> dp_prev(3,0);
+        vector<int> dp_curr(3,0); 
+        dp_prev[1] = INT_MIN;
+        for (auto price:prices){
+            dp_curr[0] = max(dp_prev[0], dp_prev[1]+price);
+            dp_curr[1] = max(dp_prev[1], dp_prev[2]-price);
+            dp_curr[2] = max(dp_prev[2], dp_prev[0]);
+            dp_prev = dp_curr;
+            dp_curr[0] = 0;
+            dp_curr[1] = 0;
+            dp_curr[2] = 0;
+        }
+        return dp_prev[0];
+    }
+};
+
+Python:
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        dp_prev = [0, -1*float("inf"), 0]
+        dp_curr = [0, 0, 0]
+        
+        for price in prices:
+            dp_curr[0] = max(dp_prev[0], dp_prev[1]+price)
+            dp_curr[1] = max(dp_prev[1], dp_prev[2]-price)
+            dp_curr[2] = max(dp_prev[2], dp_prev[0])
+            dp_prev = dp_curr
+            dp_curr = [0,0,0]
+        return dp_prev[0]

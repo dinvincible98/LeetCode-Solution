@@ -1,0 +1,36 @@
+518. Coin Change 2
+
+C++:
+
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        if (amount==0 && coins.empty()) return 1;
+        vector<int> dp(amount+1,0);
+        dp[0]=1;
+        for (auto coin:coins){
+            for (int i=coin;i<amount+1;++i){
+                dp[i] += dp[i-coin];
+            }
+        }
+        return dp[amount];
+    }
+};
+
+Python:
+
+class Solution(object):
+    def change(self, amount, coins):
+        """
+        :type amount: int
+        :type coins: List[int]
+        :rtype: int
+        """
+        if amount == 0 and coins is None:
+            return 1
+        dp = [0] * (amount+1)
+        dp[0] = 1
+        for coin in coins:
+            for i in range(coin,amount+1):
+                dp[i] += dp[i-coin];
+        return dp[amount]

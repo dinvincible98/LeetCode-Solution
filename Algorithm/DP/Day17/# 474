@@ -1,0 +1,48 @@
+474. Ones and Zeroes
+
+C++:
+
+class Solution {
+public:
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+        for (auto i:strs){
+            int m1 = 0, n1 = 0;
+            for (int j=0;j<i.size();j++){
+                if (i[j]=='1') n1+=1;
+                else    m1+=1;
+            }
+            for (int a=n;a>n1-1;a--){
+                for (int b=m;b>m1-1;b--){
+                    if (a>=n1 && b>=m1){
+                        dp[a][b] = max(dp[a][b], dp[a-n1][b-m1]+1);
+                    }
+                }
+            }
+        }
+        return dp[n][m];
+    }
+};
+Python:
+
+class Solution(object):
+    def findMaxForm(self, strs, m, n):
+        """
+        :type strs: List[str]
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        dp = [[0 for i in range(m+1)] for j in range(n+1)]
+        for s in strs:
+            m1, n1 = 0,0
+            for ch in s:
+                if ch == "1":
+                    n1+=1
+                else:
+                    m1+=1
+            for j in range(n,n1-1,-1):
+                for k in range(m,m1-1,-1):
+                    if j>=n1 and k>=m1:
+                        dp[j][k] = max(dp[j][k],dp[j-n1][k-m1]+1)
+        return dp[-1][-1]
