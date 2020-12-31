@@ -1,0 +1,41 @@
+84. Largest Rectangle in Histogram
+
+C++:
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        vector<int> q;
+        int ans = 0;
+        for (int i=0;i<heights.size()+1;++i){
+            while(!q.empty() && (i == heights.size() || heights[q.back()] >= heights[i])){
+                int top = q.back();
+                q.pop_back();
+                ans = max(ans, (i-(q.empty()? 0:q.back()+1)) * heights[top]);
+            }
+            if (i != heights.size()){
+                q.push_back(i);
+            }
+        }
+        return ans;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        stack = []
+        ans = 0
+        for i, h in enumerate (heights+[0]):
+            while stack and heights[stack[-1]]>=h:
+                H = heights[stack.pop()]
+                W = i if not stack else i-stack[-1]-1
+                ans = max(ans, H*W)
+            stack.append(i)
+        return ans
+                
