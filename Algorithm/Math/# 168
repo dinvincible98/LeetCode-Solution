@@ -1,0 +1,39 @@
+168. Excel Sheet Column Title
+
+C++:
+
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string res;
+        while (n-- > 0){
+            res = (char)('A'+ (n%26)) + res;
+            n/=26;
+        }
+        return res;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def convertToTitle(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        s = "0ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        res = ""
+        if n<=26:
+            return s[n]
+        else:
+            while n>0:
+                n,r = divmod(n,26)
+                if r==0:
+                    n-=1
+                    r+=26
+                res = s[r] + res
+        return res
+                
+        
+        

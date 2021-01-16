@@ -1,0 +1,44 @@
+405. Convert a Number to Hexadecimal
+
+C++:
+
+class Solution {
+public:
+    string toHex(int num) {
+        if (num==0) return "0";
+        long long int temp = num;
+        if (temp<0)  temp+=pow(2,32);
+        string res;
+        string s = "0123456789abcdef";
+        while(temp>0){
+            res = s[temp%16] + res;
+            temp/=16;
+        }
+        return res;
+    }
+};
+
+
+Python:
+
+class Solution(object):
+    def toHex(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        if num == 0:
+            return "0"
+        if num < 0:
+            num += 2**32
+        res = "" 
+        temp = "0123456789abcdef"
+        while num>0:
+            res = temp[num%16] + res
+            num/=16
+        return res
+
+        
+                
+        
+        

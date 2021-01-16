@@ -1,0 +1,59 @@
+504. Base 7
+
+C++:
+
+class Solution {
+public:
+    string convertToBase7(int num) {
+        if (num==0) return "0";
+        vector<string> res;
+        int sign;
+        if (num>=0){
+            sign = 0;
+        }
+        else{
+            sign = 1;
+        }
+        num = abs(num);
+        while(num!=0){
+            res.push_back(to_string(num%7));
+            num/=7;
+        }
+        if (sign==1){
+            res.push_back("-");
+        }
+        string s;
+        for (int i=res.size()-1;i>=0;--i){
+            s+=res[i];
+        }
+        return s;
+        
+    }
+};
+
+Python:
+
+class Solution(object):
+    def convertToBase7(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        if num == 0:
+            return "0"
+        res = []
+        sign = num>0
+        num = abs(num)
+        while num != 0:
+            res.append(str(num%7))
+            num/=7
+        if not sign:
+            res.append('-')
+        s = ""
+        for i in range(len(res)-1,-1,-1):
+            s+=res[i]
+        return s
+        
+                
+        
+        
