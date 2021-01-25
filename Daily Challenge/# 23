@@ -1,0 +1,68 @@
+23. Merge k Sorted Lists
+
+C++:
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        ListNode *dummy = new ListNode(0), *cur = dummy;
+        int n = lists.size(), idx = 0, min = INT_MAX;
+        while(true){
+            for(int i=0;i<n;++i){
+                if (lists[i] && lists[i]->val<min){
+                    min = lists[i]->val;
+                    idx = i;
+                }
+            }
+            if (min ==INT_MAX)  break;
+            cur->next = lists[idx];
+            cur = cur->next;
+            lists[idx] = lists[idx]->next;
+            min = INT_MAX;
+        }
+        return dummy->next;
+        
+    }
+};
+
+Python:
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        q = len(lists)
+        h = []
+        for i in range(q):
+            if lists[i]:
+                heapq.heappush(h,(lists[i].val,i,lists[i]))
+        rhead = rtail = ListNode(0)
+        while h:
+            i, n = heapq.heappop(h)[1:]
+            rtail.next = n
+            rtail = rtail.next
+            if n.next:
+                heapq.heappush(h, (n.next.val,n,n.next))
+        return rhead.next
+                
+            
+
+
+

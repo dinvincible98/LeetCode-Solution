@@ -1,0 +1,49 @@
+1329. Sort the Matrix Diagonally
+C++:
+
+class Solution {
+public:
+    vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
+        int m = mat.size(), n = mat[0].size();
+        for (int p=0;p<m+n;++p)
+        {
+            vector<int> v;
+            int pi = p<m? p:0, pj = max(0,p-m+1);
+            for (int i=pi, j=pj; i<m && j<n; ++i,++j)
+            {
+                v.push_back(mat[i][j]);
+            }
+            sort(v.begin(),v.end());
+            for (int i=pi,j=pj,k=0; i<m && j<n; ++i,++j,++k)
+            {
+                mat[i][j] = v[k];
+            }    
+        }
+        return mat;
+        
+    }
+};
+Python:
+
+class Solution(object):
+    def diagonalSort(self, mat):
+        """
+        :type mat: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        m = len(mat)
+        n = len(mat[0])
+        v = [ [] for i in range(m+n)]
+        for i in range(m):
+            for j in range(n):
+                v[i-j].append(mat[i][j])
+        for l in v:
+            l.sort(reverse=True)
+        for i in range(m):
+            for j in range(n):
+                mat[i][j]=v[i-j].pop()
+        return mat
+                
+
+
+

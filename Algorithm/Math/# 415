@@ -1,0 +1,76 @@
+415. Add Strings
+
+C++:
+
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        int i = num1.size()-1, j = num2.size()-1, sum=0;
+        string res;
+        
+        while(i>=0 && j>=0)
+        {
+            sum += (num1[i--]-'0') + (num2[j--]-'0');
+            res.push_back(char(sum%10+'0'));
+            sum = sum/10;
+        }
+        
+        while(i>=0)
+        {
+            sum += num1[i--]-'0';
+            res.push_back(char(sum%10+'0'));
+            sum = sum/10;
+        }
+        
+        while(j>=0)
+        {
+            sum += num2[j--]-'0';
+            res.push_back(char(sum%10+'0'));
+            sum = sum/10;
+        }
+        
+        if(sum>0)  res.push_back(char(sum%10 + '0'));
+        
+        reverse(res.begin(),res.end());
+        
+        return res;
+        
+    }
+};
+
+Python:
+
+class Solution(object):
+    def addStrings(self, num1, num2):
+        """
+        :type num1: str
+        :type num2: str
+        :rtype: str
+        """
+        i, j, Sum = len(num1)-1, len(num2)-1, 0
+        res = []
+        while i>=0 and j>=0:
+            Sum += ord(num1[i])-ord('0') + ord(num2[j])-ord('0')
+            res.append(str(Sum%10)) 
+            Sum/=10
+            i-=1
+            j-=1
+        
+        while i>=0:
+            Sum += ord(num1[i])-ord('0')
+            res.append(str(Sum%10))
+            Sum/=10
+            i-=1
+        
+        while j>=0:
+            Sum += ord(num2[j])-ord('0')
+            res.append(str(Sum%10))
+            Sum/=10
+            j-=1
+        
+        if Sum>0:
+            res.append(str(Sum%10))
+        
+        
+        return "".join(reversed(res))
+        
