@@ -1,0 +1,54 @@
+206. Reverse Linked List
+
+C++:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        
+        ListNode *prev = NULL;
+        ListNode *next_node;
+        while(head!=NULL)
+        {
+            next_node = head->next;
+            head->next = prev;
+            prev = head;
+            head = next_node;
+        }
+        return prev;
+        
+    }
+};
+
+
+Python:
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        prev = None
+        next_node = None
+        
+        while head:
+            next_node = head.next
+            head.next = prev
+            prev = head
+            head = next_node
+        return prev

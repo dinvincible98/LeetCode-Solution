@@ -1,0 +1,55 @@
+1332. Remove Palindromic Subsequences
+
+C++:
+
+class Solution {
+public:
+    int removePalindromeSub(string s) {
+        if (s.empty())  return 0;
+        if (isPal(s))   return 1;
+        else    return 2;
+        
+    }
+    
+private:
+    bool isPal(string s)
+    {
+        int left = 0, right = s.size()-1;
+        while(left<right)
+        {
+            if(s[left++] != s[right--]) return false;
+        } 
+        return true;
+            
+    }
+};
+
+Python:
+
+class Solution(object):
+    def removePalindromeSub(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        n = len(s)
+        if n==0:
+            return 0
+        if self.isPal(s):
+            return 1
+        else:
+            return 2
+            
+    
+    
+    def isPal(self,s):
+        left = 0
+        right = len(s)-1
+        while(left<right):
+            if s[left] != s[right]:                
+                return False
+            left+=1
+            right-=1
+        return True
+
+

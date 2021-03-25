@@ -1,0 +1,37 @@
+991. Broken Calculator
+C++:
+
+class Solution {
+public:
+    int brokenCalc(int X, int Y) {
+        if(X==Y)    return 0;
+        if(X>Y) return X-Y;
+        if(Y%2==0)
+        {
+            return brokenCalc(X, Y/2)+1;
+        }
+        else
+        {
+            return brokenCalc(X,Y+1)+1;
+        }
+        
+    }
+};
+
+Python:
+
+class Solution(object):
+    def brokenCalc(self, X, Y):
+        """
+        :type X: int
+        :type Y: int
+        :rtype: int
+        """
+        if X==Y:
+            return 0
+        if X>Y:
+            return X-Y
+        if(Y%2==0):
+            return self.brokenCalc(X,Y//2)+1
+        else:
+            return self.brokenCalc(X,Y+1)+1

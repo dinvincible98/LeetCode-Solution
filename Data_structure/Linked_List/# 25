@@ -1,0 +1,105 @@
+25. Reverse Nodes in k-Group
+
+C++:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *prev = NULL;
+        ListNode *next_node; 
+        ListNode *curr = head;
+        
+        int c = count(head);
+        
+        if(!head || c<k)   return head;
+        
+        int n = k;
+        while(curr && n--)
+        {
+            next_node = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next_node;
+        }
+        
+        if (head)
+        {
+            head->next = reverseKGroup(next_node,k);
+        }
+        return prev;
+        
+    }
+    
+    
+private:
+    int count(ListNode* head)
+    {
+        if(!head)   return 0;
+        int cnt = 0;
+        while(head)
+        {
+            cnt++;
+            head = head->next;
+        }
+        return cnt;
+    }
+};
+
+
+Python:
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        prev = None;
+        next_node = None
+        curr = head
+        
+        c = self.Count(head)
+        
+        if not head or c<k:
+            return head
+        
+        n = k
+        
+        while curr and n>0:
+            next_node = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next_node
+            n-=1
+            
+        if head:
+            head.next = self.reverseKGroup(next_node,k)
+        
+        return prev
+            
+        
+        
+    def Count(self,head):
+        if not head:
+            return 0
+        count = 0
+        while head:
+            count+=1
+            head = head.next
+        return count
+        

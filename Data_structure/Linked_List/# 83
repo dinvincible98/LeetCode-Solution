@@ -1,0 +1,42 @@
+83. Remove Duplicates from Sorted List
+
+C++:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (!head || !head->next)    return head;
+        head->next = deleteDuplicates(head->next);
+        return head->val==head->next->val? head->next:head;
+        
+    }
+};
+
+
+Python:
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head==None or head.next==None:
+            return head
+        head.next = self.deleteDuplicates(head.next)
+        head = head.next if head.val==head.next.val else head
+        return head
