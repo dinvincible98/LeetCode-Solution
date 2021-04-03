@@ -1,0 +1,47 @@
+242. Valid Anagram
+
+C++:
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        int n = s.size();
+        int m = t.size();
+        if(n!=m)    return false;
+        unordered_map<char,int> mp;
+        for (auto c:s)
+        {
+            mp[c]++;
+        }
+        for (auto c:t)
+        {
+            mp[c]--;
+        }
+        for(auto it=mp.begin();it!=mp.end();it++)
+        {
+            if(it->second != 0) return false;
+        }
+        return true;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        if len(s)!=len(t):
+            return False
+        map={}
+        for char in s:
+            map[char] = map.get(char,0)+1
+        for char in t:
+            map[char] = map.get(char,0)-1
+        
+        for val in map.values():
+            if val!=0:
+                return False
+        return True

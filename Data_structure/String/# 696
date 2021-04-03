@@ -1,0 +1,50 @@
+696. Count Binary Substrings
+
+C++:
+class Solution {
+public:
+    int countBinarySubstrings(string s) {
+        int preLen=0, curLen=1, count=0;
+        for(int i=1;i<s.size();++i)
+        {
+            if(s[i]==s[i-1])    curLen++;
+            else
+            {
+                preLen=curLen;
+                curLen=1;
+            }
+            if(preLen>=curLen)   count++;
+        }
+        return count;
+    }
+};
+
+Python:
+class Solution(object):
+    def countBinarySubstrings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        preLen = 0
+        curLen = 1
+        count = 0
+        for i in range(1,len(s)):
+            if s[i]==s[i-1]:
+                curLen+=1
+            else:
+                preLen = curLen
+                curLen = 1
+            if preLen>=curLen:
+                count+=1
+        return count
+        
+    
+    
+    def extendSub(self,s,start,end):
+        while(start>=0 and end<len(s) and s[start]==s[end]):
+            start-=1
+            end+=1
+            self.count+=1
+        
+        

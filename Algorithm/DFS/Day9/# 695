@@ -4,34 +4,40 @@ C++:
 
 class Solution {
 public:
-    int dfs (vector<vector<int>> &grid, int row, int col){
-        if (row<0 || row>=grid.size() || col<0 || col>=grid[0].size() || grid[row][col]==0){
-            return 0;
-        }
-        int area = 1;
-        grid[row][col] = 0;
-        
-        area += dfs (grid, row+1, col);
-        area += dfs (grid, row-1, col);
-        area += dfs (grid, row, col+1);
-        area += dfs (grid, row, col-1);
-        
-        return area;
-    }
-    
     int maxAreaOfIsland(vector<vector<int>>& grid) {
-        int max_area = 0;
-        for (int i=0;i<grid.size();++i){
-            for (int j=0;j<grid[0].size();j++){
-                if (grid[i][j] == 1){
-                    max_area = max(max_area,dfs(grid,i,j));
+        
+        int global_area=0;
+        int local_area;
+        for (int i=0;i<grid.size();++i)
+        {
+            for(int j=0;j<grid[0].size();++j)
+            {
+                if (grid[i][j]==1)
+                {
+                    local_area = dfs(grid,i,j);
+                    global_area = max(local_area,global_area);
                 }
             }
         }
-        return max_area;
+        return global_area;
+        
+    }
+
+    
+private:
+    int dfs(vector<vector<int>>& grid,int i,int j)
+    {
+        if (i<0 || i>=grid.size() || j<0 || j>=grid[0].size() || grid[i][j]==0) return 0;
+        grid[i][j] = 0;
+        int local_area = 1;
+        local_area += dfs(grid,i+1,j);
+        local_area += dfs(grid,i-1,j);
+        local_area += dfs(grid,i,j+1);
+        local_area += dfs(grid,i,j-1);
+        
+        return local_area;
     }
 };
-
 Python:
 
 class Solution(object):
@@ -40,26 +46,29 @@ class Solution(object):
         :type grid: List[List[int]]
         :rtype: int
         """
-        self.m = len(grid)
-        self.n = len(grid[0])
-        self.curr = 0
-        res = 0
+        global_area = 0
+        local_area = None
+        n = len(grid)
+        m = len(grid[0])
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j]==1:
+                    local_area = self.dfs(grid,i,j)
+                    global_area = max(local_area,global_area)
+        return global_area
+                
         
-        def check(row,col):
-            self.curr += 1
-            grid[row][col] = 0
-            if row+1<self.m and grid[row+1][col]:    check(row+1,col)
-            if row>0 and grid[row-1][col]:  check(row-1,col)
-            if col+1<self.n and grid[row][col+1]:    check(row,col+1)
-            if col>0 and grid[row][col-1]:  check(row,col-1)
-            
-        for i in range(self.m):
-            for j in range(self.n):
-                if grid[i][j]:
-                    check(i,j)
-                    res = max(res,self.curr)
-                    self.curr = 0
-        return res
         
+    def dfs(self,grid,i,j):
+        if i<0 or i>=len(grid) or j<0 or j>=len(grid[0]) or grid[i][j]==0:
+            return 0;
+        grid[i][j] = 0
+        area = 1
+        area += self.dfs(grid,i+1,j)
+        area += self.dfs(grid,i-1,j)
+        area += self.dfs(grid,i,j+1)
+        area += self.dfs(grid,i,j-1)
+        
+        return area
 
 

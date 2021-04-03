@@ -1,0 +1,28 @@
+409. Longest Palindrome
+
+C++:
+class Solution {
+public:
+    int longestPalindrome(string s) {
+        int odds = 0;
+        for (char c='A';c<='z';++c)
+        {
+            odds += count(s.begin(),s.end(),c)%2==1;
+        }
+        return s.size() - odds + (odds>0);
+    }
+};
+
+Python:
+
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        odds = 0
+        for char in chars:
+            odds += s.count(char)%2==1
+        return len(s) - odds + (odds>0)

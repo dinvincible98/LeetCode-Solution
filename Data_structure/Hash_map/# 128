@@ -1,0 +1,55 @@
+128. Longest Consecutive Sequence
+
+C++:
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size()==0)  return 0;
+        map<int,int> mp;
+        for (auto num:nums)
+        {
+            mp[num];
+        }
+        auto prev = mp.begin(); 
+        int cnt = 1;
+        int res = 0;
+        for (auto it=mp.begin(); it!=mp.end(); it++)
+        {
+            if(prev->first+1 == it->first)    cnt++;
+            else
+            {
+                res = max(res,cnt);
+                cnt = 1;
+                
+            }
+            prev = it;
+        }
+        return max(res,cnt);
+    }
+};
+
+Python:
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums)==0:    return 0
+        N = sorted(nums)
+        map = {}
+        for num in N:
+            map[num] = 0
+        prev = list(map.keys())[0]
+        cnt = 1
+        res = 0
+        for key in map:
+            if prev+1 == key:
+                cnt+=1
+            else:
+                res = max(res,cnt)
+                cnt = 1
+            prev = key
+        out = max(res,cnt)
+        return out
+                

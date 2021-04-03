@@ -5,14 +5,16 @@ class NumArray {
 public:
     vector<int> dp;
     NumArray(vector<int>& nums) {
-        dp = vector<int> (nums.size()+1, 0);
-        for (int i=0;i<nums.size();++i){
-            dp[i+1] = dp[i]+nums[i];
+        dp = vector<int> (nums.size()+1,0);
+        for (int i=0;i<nums.size();++i)
+        {
+            dp[i+1] = dp[i] + nums[i]; 
         }
+        
     }
     
-    int sumRange(int i, int j) {
-        return dp[j+1] - dp[i];
+    int sumRange(int left, int right) {
+        return dp[right+1] - dp[left];
     }
 };
 
@@ -24,27 +26,25 @@ public:
  
  Python:
  
- class NumArray(object):
+class NumArray(object):
 
     def __init__(self, nums):
         """
         :type nums: List[int]
         """
-        self.nums = nums
-        for i in range(1,len(self.nums)):
-            self.nums[i] = self.nums[i-1] + self.nums[i]
+        self.dp = [0] * (len(nums)+1)
+        for i in range(len(nums)):
+            self.dp[i+1] = self.dp[i] + nums[i]
+    
         
 
-    def sumRange(self, i, j):
+    def sumRange(self, left, right):
         """
-        :type i: int
-        :type j: int
+        :type left: int
+        :type right: int
         :rtype: int
         """
-        if (i==0):
-            return self.nums[j]
-        else:
-            return self.nums[j]-self.nums[i-1]
+        return self.dp[right+1]-self.dp[left]
         
 
 
