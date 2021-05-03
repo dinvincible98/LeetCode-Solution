@@ -1,0 +1,44 @@
+326. Power of Three
+
+C++:
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        int rem;
+        bool res = true;
+        if(n<=0)    return false;
+        if(n==1)    return true;
+        while (n>1)
+        {
+        
+            rem = n%3;
+            if(rem!=0) res = false;
+            n /= 3;
+
+        }
+        return res;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def isPowerOfThree(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        
+        res = True
+        
+        if n<=0:    return False
+        if n==1: return True
+        while n>1:
+            rem = n%3
+            if rem!=0:  res = False
+
+            n /= 3
+        return res
+
+
+

@@ -1,0 +1,39 @@
+283. Move Zeroes
+C++:
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int idx=0;
+        for (auto num:nums)
+        {
+            if(num!=0)
+            {
+                nums[idx++]=num;
+            }
+        }
+        while(idx<nums.size())
+        {
+            nums[idx++]=0;
+        }
+    }
+};
+
+Python:
+
+class Solution(object):
+    def moveZeroes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        idx = 0
+        for num in nums:
+            if num!=0:
+                nums[idx]=num
+                idx+=1
+        while idx<len(nums):
+            nums[idx]=0
+            idx+=1
+        
+        
+        

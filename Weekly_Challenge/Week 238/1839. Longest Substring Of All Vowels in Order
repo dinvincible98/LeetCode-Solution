@@ -1,0 +1,65 @@
+1838. Frequency of the Most Frequent Element
+
+C++:
+class Solution {
+public:
+    int longestBeautifulSubstring(string word) {
+        int cur_len = 1;
+        int max_len = 0;
+        int char_cnt = 1;
+        
+        int n = word.size();
+        
+        for (int i=1;i<n;++i)
+        {
+            if(word[i-1] == word[i])
+            {
+                ++cur_len;
+            }
+            else if (word[i-1] < word[i])
+            {
+                ++cur_len;
+                ++char_cnt;
+            }
+            else
+            {
+                cur_len = 1;
+                char_cnt = 1;
+            }
+            
+            if (char_cnt == 5)
+            {
+                max_len = max(cur_len,max_len);
+            }
+        }
+        return max_len;
+        
+
+        
+    }
+};
+Python:
+
+class Solution(object):
+    def longestBeautifulSubstring(self, word):
+        """
+        :type word: str
+        :rtype: int
+        """
+        char_cnt = 1
+        cur_len = 1
+        max_len = 0
+        
+        
+        for i in range(1,len(word)):
+            if word[i-1] == word[i]:
+                cur_len += 1
+            elif word[i-1] < word[i]:
+                cur_len += 1
+                char_cnt += 1
+            else:
+                cur_len = 1
+                char_cnt = 1
+            if char_cnt == 5:
+                max_len = max(cur_len,max_len)
+        return max_len

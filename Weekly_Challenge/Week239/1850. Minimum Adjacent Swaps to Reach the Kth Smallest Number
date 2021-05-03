@@ -1,0 +1,41 @@
+
+C++:
+class Solution {
+public:
+    int getMinSwaps(string num, int k) {
+        string origin = num;
+        
+        while(k--)
+        {
+            next_permutation(num.begin(),num.end());
+        }
+        
+        int res = Count(origin,num);
+        return res;
+        
+    }
+private:
+    int Count(string s1, string s2)
+    {
+        int n = s1.size();
+        int i=0, j=0;
+        int res = 0;
+        
+        while(i<n)
+        {
+            j = i;
+            
+            while(s1[j] != s2[i])   j++;
+            
+            while(i<j)
+            {
+                swap(s1[j],s1[j-1]);
+                --j;
+                ++res;
+            }
+            ++i;
+        }
+        return res;
+    }
+    
+};

@@ -1,0 +1,62 @@
+4. Median of Two Sorted Arrays
+
+C++:
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> list;
+        
+        for (auto& num:nums1)
+        {
+            list.push_back(num);
+        }
+        for (auto& num:nums2)
+        {
+            list.push_back(num);
+        }      
+        
+        sort(list.begin(),list.end());
+        
+        int n = list.size();
+        float out;
+        if(n%2)
+        {
+            int mid = n/2;
+            out = static_cast<float> (list[mid]);
+        }
+        else
+        {
+            int mid1 = n/2;
+            int mid2 = n/2-1;
+            out = static_cast<float> (list[mid1]+list[mid2]) / 2;
+        }
+        return out;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        res = []
+        for num in nums1:
+            res.append(num)
+        for num in nums2:
+            res.append(num)
+        res.sort()
+        
+        n = len(res)
+        
+        if n%2==1:
+            mid = n/2
+            out = res[mid]
+        else:
+            mid1 = n/2
+            mid2 = n/2-1
+            out = float(res[mid1] + res[mid2])/2
+        return out

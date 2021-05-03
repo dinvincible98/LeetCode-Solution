@@ -1,0 +1,54 @@
+667. Beautiful Arrangement II
+
+C++:
+
+// k distinct distance 1, k+1, 2, k, 3, k-1,.......
+// distance k, k-1, k-2,k-3, ....... 
+
+class Solution {
+public:
+    vector<int> constructArray(int n, int k) {
+        int left = 1, right = k+1;
+        vector<int> res;
+        while(left<=right)
+        {
+            res.push_back(left++);
+            if(left<=right)
+            {
+                res.push_back(right--);
+            }
+
+        }
+        for (int i=k+2;i<=n;++i)
+        {
+            res.push_back(i);
+        }
+        return res;
+    }
+};
+
+Python:
+        
+class Solution(object):
+    def constructArray(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[int]
+        """
+        left = 1
+        right = k+1
+        res = []
+        while left<=right:
+            res.append(left)
+            left+=1
+            if left<=right:
+                res.append(right)
+                right-=1
+        for i in range(k+2,n+1):
+            res.append(i)
+        
+        return res
+
+
+

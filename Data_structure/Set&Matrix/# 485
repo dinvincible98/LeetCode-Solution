@@ -1,0 +1,32 @@
+485. Max Consecutive Ones
+C++:
+class Solution {
+public:
+    int findMaxConsecutiveOnes(vector<int>& nums) {
+        int Max=0, cur = 0;
+        for (auto num:nums)
+        {
+            cur = num==1? cur+1:0;
+            Max = max(Max,cur);
+        }
+        return Max;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def findMaxConsecutiveOnes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        Max = 0
+        cur = 0
+        for num in nums:
+            cur = cur+1 if num is 1 else 0
+            Max = max(Max,cur)
+        return Max
+        
+        
+        

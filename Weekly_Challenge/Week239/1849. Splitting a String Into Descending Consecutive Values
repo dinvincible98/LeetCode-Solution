@@ -1,0 +1,39 @@
+
+C++:
+class Solution {
+public:
+    bool splitString(string s) {
+        return helper(s,0,-1);
+    }
+    bool helper (string & s , int ind , double last){
+        // Base return cases
+        if (ind >=s.size()){
+            if (last==-1 ||  last==stod(s)){
+                return false;
+            }
+            return true;
+        }
+		// Check if the number to be created is the first number ever 
+        if (last == -1){
+            for (int i = 1; i<=s.size()-ind; i++){
+                if (helper(s,i,stod(s.substr(0,i)))){
+                    return true;
+                }
+            }
+            return false;
+        }
+		// Check for the next numbers to be created
+        for (int i = 1; i<=s.size()-ind; i++){
+            if ( (double)last - stod(s.substr(ind,i)) == 1){
+                if (helper(s,ind+i,stod(s.substr(ind,i)))){
+                    return true;
+                }
+            }
+            if ( (double)last - stod(s.substr(ind,i)) < 1 ){
+                break;
+            }
+        }
+		// If we exit last loop, we should return false since we couldn't create a number!
+        return false;
+    }
+};
