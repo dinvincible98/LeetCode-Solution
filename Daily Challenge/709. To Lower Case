@@ -1,0 +1,23 @@
+C++:
+
+class Solution {
+public:
+    string toLowerCase(string s) {
+        
+        for (int i=0;i<s.size();++i)
+        {
+            if (isupper(s[i]))
+            {
+                s[i] = toLower(s[i]);
+            }
+        }
+        
+        return s;
+    }
+    
+private:
+    char toLower(char c)
+    {
+        return char(c -'A' + 'a');
+    }
+};

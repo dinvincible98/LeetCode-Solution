@@ -1,0 +1,44 @@
+C++:
+class Solution {
+public:
+    int maxScore(vector<int>& A, int k) {
+        int Sum = accumulate(A.begin(),A.begin()+k,0);
+        int curr = Sum;
+        int n = A.size()-1;
+        
+        while(k)
+        {
+            curr += -A[k-1] + A[n];
+            Sum = max(curr,Sum);
+            --n;
+            --k;
+        }
+        
+        return Sum;
+        
+    }
+};
+
+Python:
+class Solution(object):
+    def maxScore(self, A, k):
+        """
+        :type cardPoints: List[int]
+        :type k: int
+        :rtype: int
+        """
+        Sum = 0
+        for i in range(k):
+            Sum += A[i]
+            
+        n = len(A)
+        
+        cur_max = Sum
+        
+        while k:
+            cur_max += -A[k-1] + A[n-1]
+            Sum = max(cur_max,Sum)
+            k-=1
+            n-=1
+        
+        return Sum

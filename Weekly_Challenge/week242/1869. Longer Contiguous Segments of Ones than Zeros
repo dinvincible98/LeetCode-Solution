@@ -1,0 +1,36 @@
+C++:
+class Solution {
+public:
+    bool checkZeroOnes(string s) {
+        int cnt1_max = 0;
+        int cnt0_max = 0;
+        for (int i=0;i<s.size();++i)
+        {
+            if(s[i]=='1')
+            {
+                int cnt1 = 1;
+                for (int j=i+1;j<s.size();++j)
+                {
+                    if (s[j]=='1')  ++cnt1;
+                    else    break;
+                }
+                cnt1_max = max(cnt1_max,cnt1);
+            }
+            
+            if(s[i]=='0')
+            {
+                int cnt0 = 1;
+                for (int j=i+1;j<s.size();++j)
+                {
+                    if (s[j]=='0')  ++cnt0;
+                    else    break;
+                }
+                cnt0_max = max(cnt0_max,cnt0);
+            }       
+        
+        }
+
+        
+        return cnt1_max>cnt0_max? true:false;
+    }
+};

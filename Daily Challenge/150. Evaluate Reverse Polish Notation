@@ -1,0 +1,47 @@
+C++:
+
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> stk;
+        
+        for (auto& s:tokens)
+        {
+            string str = s;
+            if (isNum(str))
+            {
+                stk.push(stoi(str));
+            }
+            else
+            {
+                int num2 = stk.top();
+                stk.pop();
+            
+                int num1 = stk.top();
+                stk.pop();
+                
+                switch (str[0])
+                {
+                    case '+':   stk.push(num1+num2);break;
+                    case '-':   stk.push(num1-num2);break;
+                    case '*':   stk.push(num1*num2);break;
+                    case '/':   stk.push(num1/num2);break;                    
+                }
+
+            }            
+            
+        }
+        
+        int res = stk.top();
+    
+
+        return res;
+    }
+
+private:
+    bool isNum(string s)
+    {
+        return !(s=="+" || s=="-" || s=="*" || s=="/");
+    }
+};
+

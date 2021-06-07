@@ -1,0 +1,81 @@
+C++:
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> res;
+        sort(nums.begin(),nums.end());
+        if(n<3) return res;
+        
+        for (int i=0;i<n-1;++i)
+        {
+            int low = i+1;
+            int high = n-1;
+            int bal = -1 * nums[i];
+            
+            // avoid duplicates
+            if (i>0 && nums[i-1]==nums[i])  continue;
+            
+            while (low<high)
+            {
+                if (nums[low]+nums[high] == bal)
+                {
+                    res.push_back({nums[i],nums[low],nums[high]});
+                    
+                    // avoid duplicates
+                    while(low<high && nums[low]==nums[low+1])   ++low;
+                    while(low<high && nums[high]==nums[high-1]) --high;
+                    
+                    ++low;
+                    --high;
+                    
+                }
+                else if(nums[low]+nums[high]<bal)   ++low;
+                else    --high;
+            }
+        }
+        return res;
+        
+    }
+};
+
+Python:
+
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        n = len(nums)
+        
+        if (n<3):    return []
+        
+        nums.sort()
+        
+        for i in range(n-1):
+            low = i+1
+            high = n-1
+            bal = -1*nums[i]
+            
+            if i>0 and nums[i]==nums[i-1]:  continue
+            
+            
+            while low < high:
+                if nums[low]+nums[high]==bal:
+                    res.append([nums[i],nums[low],nums[high]])
+                    
+                    while low<high and nums[low]==nums[low+1]:  low+=1
+                    while low<high and nums[high]==nums[high-1]:  high-=1
+                    
+                    low+=1
+                    high-=1
+                elif nums[low]+nums[high]<bal:
+                    low+=1
+                else:
+                    high-=1
+        return res
+                                                
+                
+        

@@ -1,0 +1,38 @@
+//C++
+class Solution {
+public:
+    bool isSumEqual(string firstWord, string secondWord, string targetWord) {
+        map<char,char> mp;
+    
+        for (int i='a';i<='j';++i)
+        {
+            mp[i] = i-'a' + '0'; 
+        }
+        
+        
+     
+        string temp1,temp2,temp3;
+        for (auto& c:firstWord)
+        {
+     than       if(mp.count(c)) temp1+=mp[c]; 
+        }
+        for (auto& c:secondWord)
+        {
+            if(mp.count(c)) temp2+=mp[c]; 
+        }
+        
+        for (auto& c:targetWord)
+        {
+            if(mp.count(c)) temp3+=mp[c]; 
+        }
+        
+        
+        
+        int sum = stoi(temp1) + stoi(temp2);
+        
+
+        
+        return sum==stoi(temp3)? true:false;
+    }
+
+};

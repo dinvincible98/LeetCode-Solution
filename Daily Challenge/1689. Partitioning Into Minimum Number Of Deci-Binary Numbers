@@ -1,0 +1,19 @@
+C++:
+class Solution {
+public:
+    int minPartitions(string n) {
+        return *max_element(n.begin(),n.end())-'0';
+    }
+};
+
+Python:
+
+class Solution(object):
+    def minPartitions(self, n):
+        """
+        :type n: str
+        :rtype: int
+        """
+        
+        return int(max(n))
+        

@@ -1,0 +1,27 @@
+C++:
+class Solution {
+public:
+    int minPairSum(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<pair<int,int>> list;
+        int left = 0, right = nums.size()-1;
+        
+        while(left<right)
+        {
+            list.push_back(make_pair(nums[left],nums[right]));
+            ++left;
+            --right;
+        }
+        
+        int res = 0; 
+        for(auto& it:list)
+        {
+
+            int temp = it.first+it.second;
+            res = max(res,temp);
+        }
+        
+        return res;
+        
+    }
+};

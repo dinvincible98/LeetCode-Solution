@@ -1,0 +1,50 @@
+C++:
+class Solution {
+public:
+    vector<string> res;
+    vector<string> generateParenthesis(int n) {
+        
+        string curr;
+        dfs(n,0,0,curr);
+        
+        return res;
+    }
+    
+private:
+    void dfs(int n, int l, int r, string curr)
+    {
+        if (l+r == 2*n)
+        {
+           res.push_back(curr); 
+        }
+        
+        if (l<n)    dfs(n,l+1,r,curr+'(');
+        if (l>r)    dfs(n,l,r+1,curr+')');
+    }
+};
+
+Python:
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        
+        self.res = []
+        curr = ""
+        
+        self.dfs(n,0,0,curr)
+        
+        return self.res
+        
+        
+    
+    def dfs(self,n,l,r,curr):
+        if l+r == 2*n:
+            self.res.append(curr)
+        
+        
+        if l<n: self.dfs(n,l+1,r,curr+'(')
+        if l>r: self.dfs(n,l,r+1,curr+')')
+        

@@ -1,0 +1,34 @@
+C++:
+class Solution {
+typedef long long ll;
+
+public:
+    bool isPossible(vector<int>& target) {
+        ll Sum = 0;
+        int n = target.size();
+        if(n==1)    return target[0]==1;
+        priority_queue<ll> pq(target.begin(),target.end());
+        
+        for (auto& n:target)
+        {
+            Sum += n;
+        }
+        
+        while(pq.top()!=1)
+        {
+            ll max1 = pq.top(); 
+            pq.pop();
+            ll max2 = pq.top();
+            ll rest = Sum-max1;
+            if(max1-rest < 1)   return false;
+            
+            int k = max(1LL,(max1-max2)/rest);
+            pq.push(max1 - rest*k);
+            Sum -= rest*k; 
+            
+        }
+        return true;
+        
+    }
+};
+

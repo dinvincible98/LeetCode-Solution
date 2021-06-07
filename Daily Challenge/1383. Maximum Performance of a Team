@@ -1,0 +1,73 @@
+C++:
+
+class Solution {
+public:
+    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
+        vector<pair<int,int>> es(n);
+        
+        for(int i=0;i<n;++i)    es[i] = {efficiency[i],speed[i]};
+        
+        sort(es.rbegin(),es.rend());
+        
+        priority_queue<int,vector<int>,greater<int>> pq;   //min heap
+        
+        long long sumS = 0, res = 0, mod = 1e9+7;
+        
+        for (auto& it:es)
+        {
+            // push speed
+            pq.push(it.second);
+            sumS += it.second;
+ 
+            // check size update sumS and pq           
+            if (pq.size()>k)
+            {
+                sumS -= pq.top();
+                pq.pop();
+            }
+            res = max(res,it.first*sumS);
+            
+        }
+        
+        return res % (int)mod;
+    }
+};
+
+
+Python:
+
+class Solution(object):
+    def maxPerformance(self, n, speed, efficiency, k):
+        """
+        :type n: int
+        :type speed: List[int]
+        :type efficiency: List[int]
+        :type k: int
+        :rtype: int
+        """
+        ess = []
+        for i in range(n): ess.append([efficiency[i],speed[i]])
+        
+        sumS = 0
+        res = 0
+        mod = 1e9+7
+        
+        ess.sort(reverse=True)
+        
+        heap = []
+        heapq.heapify(heap)
+        
+        for es in ess:
+            heapq.heappush(heap,es[1])
+            sumS += es[1]
+            
+            if len(heap)>k:
+                sumS -= heapq.heappop(heap)
+            
+            res = max(res,sumS*es[0])
+        
+        return res%int(mod)
+                
+
+
+

@@ -1,0 +1,54 @@
+// C++
+class Solution {
+public:
+    int maxArea(int h, int w, vector<int>& hCuts, vector<int>& vCuts) {
+        long long mod = 1e9+7;
+        return maxDiff(hCuts,h) * maxDiff(vCuts,w) % mod;
+    }
+private:
+    long maxDiff(vector<int>& cut, int size)
+    {
+        cut.push_back(0);
+        cut.push_back(size);
+        sort(cut.begin(),cut.end());
+        
+        int max_diff = 0;
+        int n = cut.size();
+        for (int i=1;i<n;++i)   max_diff =  max(max_diff,cut[i]-cut[i-1]);
+        
+        return max_diff;
+    }
+};
+
+// python
+Python:
+
+class Solution(object):
+    def maxArea(self, h, w, hCuts, vCuts):
+        """
+        :type h: int
+        :type w: int
+        :type horizontalCuts: List[int]
+        :type verticalCuts: List[int]
+        :rtype: int
+        """
+        return int(self.maxDiff(hCuts,h) * self.maxDiff(vCuts,w) % (1e9+7))
+    
+    
+    def maxDiff(self,cuts,size):
+        cuts.append(0)
+        cuts.append(size)
+        cuts.sort()
+        
+        max_diff = 0
+        
+        for i in range(1,len(cuts)):    max_diff = max(max_diff,cuts[i]-cuts[i-1])
+        
+        return max_diff
+            
+        
+
+
+
+
+

@@ -1,0 +1,66 @@
+C++:
+
+class Solution {
+public:
+    int minMoves2(vector<int>& nums) {
+        int cnt = 0;
+        int left = 0, right = nums.size()-1;
+        sort(nums.begin(),nums.end());
+        
+        int n = nums.size();
+        int median;
+        if(n%2)
+        {
+            median = nums[n/2];
+        }
+        else
+        {
+            median = (nums[n/2] + nums[n/2-1])/2;
+        }
+        
+        while(left<right)
+        {
+            if(nums[left]<median)
+            {
+                cnt += median-nums[left];
+            }
+            if(nums[right]>median)
+            {
+                cnt += nums[right]-median;
+            }
+            ++left;
+            --right;
+        }
+        return cnt;
+    }
+};
+
+Python:
+        
+class Solution(object):
+    def minMoves2(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        left = 0
+        right = len(nums)-1
+        n = len(nums)
+        cnt = 0
+        nums.sort()
+        
+        if n%2==1:
+            median = nums[n/2]
+        else:
+            median = (nums[n/2]+nums[n/2-1])/2
+        
+        while left<right:
+            if nums[left]<median:
+                cnt+=median-nums[left]
+            if median<nums[right]:
+                cnt+=nums[right]-median
+            left+=1
+            right-=1
+        
+        return cnt
+

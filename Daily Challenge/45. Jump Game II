@@ -1,0 +1,41 @@
+C++:
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> jumps(n,INT_MAX);
+        jumps[0] = 0;
+        for (int i=0;i<n-1;++i)
+        {
+            for (int j=1;j<=nums[i];++j)
+            {
+                if(i+j<n)
+                {
+                    jumps[i+j] = min(jumps[i+j],jumps[i]+1);
+                }
+            }
+        }
+        return jumps[n-1];
+    }
+};
+
+Python:
+class Solution(object):
+    def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        n = len(nums)
+        jumps = [1e5]*n
+        jumps[0] = 0
+        
+        for i in range(n-1):
+            for j in range(1,nums[i]+1):
+                if i+j<n:
+                    jumps[i+j] = min(jumps[i+j],jumps[i]+1)
+        return jumps[-1]
+
+

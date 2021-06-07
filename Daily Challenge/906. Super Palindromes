@@ -1,0 +1,49 @@
+C++:
+
+typedef long long ll;
+class Solution {
+public:    
+    int superpalindromesInRange(string left, string right) {
+        int cnt = 0;
+        ll l = stol(left);
+        ll r = stol(right);
+        
+        ll sqrt_l = sqrt(l), sqrt_r =sqrt(r), num = 0;
+        
+        for(ll i=1;num<=sqrt_r;++i)
+        {
+            num = createPal(i,i);
+            if(num>=sqrt_l && num<=sqrt_r && isPal(num*num))    ++cnt;   // even length
+            num = createPal(i,i/10);
+            if(num>=sqrt_l && num<=sqrt_r && isPal(num*num))    ++cnt;   // odd length
+        }
+        return cnt;
+    }
+    
+private:
+    bool isPal(ll num)
+    {
+        ll temp = num, rev = 0;
+        while(temp>0)
+        {
+            rev = rev*10+temp%10;
+            temp/=10;
+        }
+        
+        return rev==num;
+    }
+    
+    ll createPal(ll prefix,ll suffix)
+    {
+        while(suffix>0)
+        {
+            prefix= prefix*10+suffix%10;
+            suffix/=10;
+        }
+        return prefix;
+    }
+    
+};
+
+
+

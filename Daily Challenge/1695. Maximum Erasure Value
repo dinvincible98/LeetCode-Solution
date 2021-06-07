@@ -1,0 +1,59 @@
+C++:
+
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        int sum = 0, curr = 0;
+        int i = 0, j = 0;
+        int n = nums.size();
+        unordered_set<int> s;
+        
+        while (i<n && j<n)
+        {
+            if (s.find(nums[j])==s.end())
+            {
+                curr += nums[j];
+                sum = max(sum,curr);
+                s.insert(nums[j]);
+                ++j;
+            }
+            else
+            {
+                curr -= nums[i];
+                s.erase(nums[i]);
+                ++i;
+            }
+            
+        }
+        return sum;
+    }
+};
+
+Python:
+
+class Solution(object):
+    def maximumUniqueSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        curr = 0
+        Sum = 0
+        i,j = 0, 0
+        n = len(nums)
+        s = set()
+        
+        while i<n and j<n:
+            if nums[j] not in s:
+                curr += nums[j]
+                Sum = max(Sum,curr)
+                s.add(nums[j])
+                j += 1
+            else:
+                curr -= nums[i]
+                s.remove(nums[i])
+                i += 1
+        return Sum
+
+
+

@@ -1,0 +1,29 @@
+//C++:
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size()==0)  return 0;
+        map<int,int> mp;
+        for (auto num:nums)
+        {
+            mp[num];
+        }
+        auto prev = mp.begin(); 
+        int cnt = 1;
+        int res = 0;
+        for (auto it=mp.begin(); it!=mp.end(); it++)
+        {
+            if(prev->first+1 == it->first)    cnt++;
+            else
+            {
+                res = max(res,cnt);
+                cnt = 1;
+                
+            }
+            prev = it;
+        }
+        return max(res,cnt);
+    }
+};
+
+

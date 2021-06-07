@@ -1,0 +1,28 @@
+// C++:
+class Solution {
+public:
+    string maxValue(string n, int x) {
+        int l = n.size()-1;
+        int idx = l+1;
+        
+        if (n[0]=='-')
+        {
+            for (int i=l;i>=1;--i)
+            {
+                if (n[i]-'0'>x) idx = i;
+            }
+        }
+        else
+        {
+            for (int i=l;i>=0;--i)
+            {
+                if (n[i]-'0'<x) idx = i;
+            }
+        }
+        
+        n.insert(n.begin()+idx,x+'0');
+        
+        return n;
+        
+    }
+};
