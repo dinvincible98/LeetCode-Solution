@@ -1,0 +1,74 @@
+//C++:
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    unordered_map<int,int>mp;
+    int index = 0;
+    
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n = inorder.size();
+        for (int i=0;i<n;++i)   mp[inorder[i]] = i;
+        
+        return helper(preorder,0,n-1);
+    }
+    
+    
+private:
+    TreeNode* helper(vector<int>& preorder,int start,int end)
+    {
+        if (start>end)  return NULL;
+        int i = mp[preorder[index]];
+        
+        TreeNode *tree = new TreeNode(preorder[index++]);
+        tree->left = helper(preorder,start,i-1);
+        tree->right = helper(preorder,i+1,end);
+        
+        return tree;
+        
+    }
+    
+};
+
+//Python:
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        self.dic = dict()
+        self.index = 0
+        
+        n =len(inorder) 
+        for i in range(n):  self.dic[inorder[i]] = i
+    
+        return self.helper(preorder,0,n-1)
+    
+    def helper(self,preorder,start,end):
+        if start>end:   return None
+        i = self.dic[preorder[self.index]]
+        
+        tree = TreeNode(preorder[self.index])
+        self.index+=1
+        
+        tree.left = self.helper(preorder,start,i-1)
+        tree.right = self.helper(preorder,i+1,end)
+        
+        return tree

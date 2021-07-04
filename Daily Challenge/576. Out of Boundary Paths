@@ -1,0 +1,72 @@
+//C++:
+
+class Solution {
+public:
+    static const int mod = 1e9+7;
+    int findPaths(int m, int n, int maxMove, int i, int j) {
+        vector<vector<vector<int>>> dp(maxMove+1,vector<vector<int>> (m+1,vector<int> (n+1,-1)));
+        dp[maxMove][m][n] = helper(m,n,maxMove,i,j,0,dp);
+        
+        return dp[maxMove][m][n];
+        
+    }
+
+private:
+    int helper(int row, int col, int maxMove,int i, int j,int move, vector<vector<vector<int>>> &dp)
+    {
+        if(i<0 || j<0 || i>=row || j>=col)  return 1;
+        
+        if (move==maxMove)    return 0;
+        
+        if (dp[move][i][j] != -1)  return dp[move][i][j] % mod;
+    
+        int temp = 0;
+        temp = (temp + helper(row,col,maxMove,i,j-1,move+1,dp)) % mod;
+        temp = (temp + helper(row,col,maxMove,i,j+1,move+1,dp)) % mod;
+        temp = (temp + helper(row,col,maxMove,i-1,j,move+1,dp)) % mod;
+        temp = (temp + helper(row,col,maxMove,i+1,j,move+1,dp)) % mod;
+        
+        dp[move][i][j] = temp;
+        
+        return dp[move][i][j] % mod; 
+    }
+};
+
+//Python:
+class Solution(object):
+    def findPaths(self, m, n, maxMove, startRow, startColumn):
+        """
+        :type m: int
+        :type n: int
+        :type maxMove: int
+        :type startRow: int
+        :type startColumn: int
+        :rtype: int
+        """
+        self.mod = 1e9+7
+        self.dp = [[[-1 for i in range(n+1)] for j in range(m+1)] for k in range(maxMove+1)]
+        
+        self.dp[maxMove][m][n] = self.helper(m,n,maxMove,startRow,startColumn,0,self.dp)
+        
+        return int(self.dp[maxMove][m][n])
+    
+    def helper(self,row,col,maxMove,i,j,move,dp):
+        if i<0 or j<0 or i>=row or j>=col:    return 1
+        
+        if move == maxMove: return 0
+        
+        if dp[move][i][j] !=-1: return dp[move][i][j] % self.mod
+        
+        temp = 0
+        
+        temp = (temp + self.helper(row,col,maxMove,i,j-1,move+1,dp)) % self.mod
+        temp = (temp + self.helper(row,col,maxMove,i,j+1,move+1,dp)) % self.mod
+        temp = (temp + self.helper(row,col,maxMove,i-1,j,move+1,dp)) % self.mod
+        temp = (temp + self.helper(row,col,maxMove,i+1,j,move+1,dp)) % self.mod
+        
+        dp[move][i][j] = temp
+        
+        return dp[move][i][j] % self.mod
+
+
+
