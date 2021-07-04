@@ -1,0 +1,63 @@
+//C++:
+
+typedef vector<vector<int>>::iterator iter;
+class Solution {
+public:
+    vector<int> countSmaller(vector<int>& nums) {
+        vector<vector<int>> hold;
+        int n = nums.size();
+        for (int i=0;i<n;++i)   hold.push_back(vector<int> ({nums[i],i}));
+        vector<int> cnt(n,0);
+        sort_cnt(hold.begin(),hold.end(),cnt);
+        
+        return cnt;
+    }
+private:
+    void sort_cnt(iter l, iter r, vector<int> &cnt)
+    {
+        if (r-l <= 1)   return;
+        iter m = l + (r-l)/2;
+        sort_cnt(l,m,cnt);
+        sort_cnt(m,r,cnt);
+        
+        for (iter i=l,j=m;i<m;++i)
+        {
+            while (j<r && (*i)[0]>(*j)[0])  ++j;
+            cnt[(*i)[1]] += j-m;
+        }
+        inplace_merge(l,m,r);
+    }
+};
+//Python:
+class Solution(object):
+    def countSmaller(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        
+        self.cnt = [0] * len(nums)
+        self.sort_cnt(self.cnt,list(enumerate(nums)))
+        
+        return self.cnt
+    
+    
+    def sort_cnt(self,cnt,nums):
+        
+        mid = len(nums)/2
+        if mid:
+            left = self.sort_cnt(cnt,nums[:mid])
+            right = self.sort_cnt(cnt,nums[mid:])
+            
+            for i in range(len(nums))[::-1]:
+                if not right or left and left[-1][1] > right[-1][1]:
+                    cnt[left[-1][0]] += len(right)
+                    nums[i] = left.pop()
+                else:
+                    nums[i] = right.pop()
+        return nums
+                    
+        
+
+
+

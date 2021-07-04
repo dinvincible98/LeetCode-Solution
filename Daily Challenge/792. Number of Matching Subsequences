@@ -1,0 +1,60 @@
+//C++:
+class Solution {
+public:
+    int numMatchingSubseq(string s, vector<string>& words) {
+//         vector<const char*> waiting[128];
+//         for (auto& w:words)
+//         {
+//             waiting[w[0]].push_back(w.c_str());
+//         }
+        
+//         for (auto& c:s)
+//         {
+//             auto advance = waiting[c];
+//             waiting[c].clear();
+            
+//             for (auto& it:advance)
+//             {
+//                 waiting[*++it].push_back(it);
+//             }
+//         }
+//         return waiting[0].size();
+        vector<pair<int,int>> waiting[128];
+        for (int i=0;i<words.size();++i)
+        {
+            waiting[words[i][0]].push_back(make_pair(i,1));
+        }
+        
+        for (auto& c:s)
+        {
+            auto advance = waiting[c];
+            waiting[c].clear();
+            for (auto& it:advance)
+            {
+                waiting[words[it.first][it.second++]].push_back(it);
+            }
+        }
+        return waiting[0].size();
+        
+    }
+};
+
+//Python:
+class Solution(object):
+    def numMatchingSubseq(self, s, words):
+        """
+        :type s: str
+        :type words: List[str]
+        :rtype: int
+        """
+        waiting = collections.defaultdict(list)
+        for it in map(iter,words):
+            waiting[next(it)].append(it)
+        for c in s:
+            for it in waiting.pop(c,()):
+                waiting[next(it,None)].append(it)
+        return len(waiting[None])
+        
+
+
+

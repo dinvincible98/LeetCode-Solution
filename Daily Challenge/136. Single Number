@@ -1,0 +1,25 @@
+//C++:
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int x = 0;
+        for (auto& n:nums)  x^=n;
+        
+        return x;
+    }
+};
+
+//Python:
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        x = 0
+        for num in nums:    x^=num
+            
+        return x
+
+
+

@@ -1,0 +1,78 @@
+//C++:
+class Solution {
+public:
+    int n;
+    string temp;
+    unordered_set<string> st;
+    int res;
+    
+    int maxUniqueSplit(string s) {
+        temp = s;
+        res = 0;
+        n = s.size();
+        check(0);
+        
+        return res;
+        
+    }
+    
+    
+private:
+    void check(int x)
+    {
+        if (x==n)
+        {
+            int size = st.size();
+            res = max(res,size);
+            return;
+        }
+            
+        
+        string s = "";
+        
+        for (int i=x;i<n;++i)
+        {
+            s+=temp[i];
+            if (st.find(s)==st.end())
+            {
+                st.insert(s);
+                check(i+1);
+                st.erase(s);
+            }
+        }
+    }
+};
+
+//Python:
+class Solution(object):
+    def maxUniqueSplit(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        self.st = set()
+        self.n = len(s)
+        self.res = 0
+        self.s = s
+        
+        self.check(0)
+        
+        return self.res
+    
+    
+    def check(self,x):
+        
+        if (x==self.n):
+            self.res = max(self.res,len(self.st))
+            return
+        
+        temp = ""
+        for i in range(x,self.n):
+            temp += self.s[i]
+            if temp not in self.st:
+                self.st.add(temp)
+                self.check(i+1)
+                self.st.remove(temp)
+            
+                
+

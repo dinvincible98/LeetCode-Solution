@@ -1,0 +1,41 @@
+//C++:
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int n = nums.size();
+        int left = 0;
+        int right = n-1;
+        
+        while(left<=right)
+        {
+            if(nums[left]==target)  return left;
+            if (nums[right]==target)   return right;
+            
+            if (target<nums[left])  --right;
+            else if(target>nums[left])  ++left;
+        }
+        return -1;
+    }
+};
+
+//Python:
+
+class Solution(object):
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        n = len(nums)
+        left = 0
+        right = n-1
+        
+        while left<=right:
+            if nums[left]==target:  return left
+            if nums[right]==target: return right
+            
+            if nums[left]>target:   right-=1
+            elif nums[left]<target: left+=1
+        
+        return -1

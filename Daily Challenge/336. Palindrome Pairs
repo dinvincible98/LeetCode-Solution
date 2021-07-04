@@ -1,0 +1,54 @@
+//C++:
+
+class Solution {
+public:
+    vector<vector<int>> palindromePairs(vector<string>& words) {
+        unordered_map<string,int> mp;
+        vector<vector<int>> res;
+        int n = words.size();
+        string left,right;
+        
+        
+        for (int i=0;i<n;++i)
+        {
+            string temp = words[i];
+            reverse(temp.begin(),temp.end());
+            mp[temp]=i;
+        }
+  
+              
+        for (int i=0;i<n;++i)
+        {
+            for (int j=0;j<words[i].size();++j)
+            {
+                left = words[i].substr(0,j);
+
+                right = words[i].substr(j,words[i].size());
+
+                if (mp.find(left)!=mp.end() && mp[left]!=i && isPal(right))
+                {
+
+                    res.push_back({i,mp[left]});
+                    if (left.empty())   res.push_back({mp[left],i});
+                }
+                
+                if (mp.find(right)!=mp.end() && mp[right]!=i && isPal(left))    res.push_back({mp[right],i});
+            }
+        }
+        
+        return res;
+    }
+    
+private:
+    bool isPal(string s)
+    {
+        int left = 0, right = s.size()-1;
+        while (left<right)
+        {
+            if (s[left++]!=s[right--])  return false;
+        }
+        return true;
+    }
+};
+
+

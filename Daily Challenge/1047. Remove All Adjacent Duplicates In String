@@ -1,0 +1,34 @@
+//C++:
+
+class Solution {
+public:
+    string removeDuplicates(string s) {
+        string res = "";
+        for (auto& ch:s)
+        {
+            if (res.size() && ch==res.back())   res.pop_back();
+            else    res.push_back(ch);
+        }
+        return res;
+    }
+};
+
+
+//Python:
+class Solution(object):
+    def removeDuplicates(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        
+        res = ""
+        
+        for c in s:
+            if res and c==res[-1]:  res = res[:-1]
+            else:   res += c
+        
+        return res
+
+
+

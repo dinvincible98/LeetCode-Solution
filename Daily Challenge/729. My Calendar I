@@ -1,0 +1,50 @@
+//C++:
+
+class MyCalendar {
+public:
+    vector<pair<int,int>> list;
+    MyCalendar() {
+        
+    }
+    
+    bool book(int start, int end) {
+        
+        for (auto& it:list)
+        {
+            if (max(it.first,start)<min(it.second,end)) return false;
+        }
+        list.push_back({start,end});
+        return true;
+    }
+};
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar* obj = new MyCalendar();
+ * bool param_1 = obj->book(start,end);
+ */
+
+//Python:
+
+class MyCalendar(object):
+
+    def __init__(self):
+        self.list = []
+
+    def book(self, start, end):
+        """
+        :type start: int
+        :type end: int
+        :rtype: bool
+        """
+        
+        for vec in self.list:
+            if max(vec[0],start) < min(vec[1],end): return False
+        self.list.append([start,end])
+        return True
+        
+
+
+# Your MyCalendar object will be instantiated and called as such:
+# obj = MyCalendar()
+# param_1 = obj.book(start,end)

@@ -1,0 +1,70 @@
+//C++:
+
+class MedianFinder {
+public:
+    priority_queue<long> small, large;
+    /** initialize your data structure here. */
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {
+        small.push(num);
+        large.push(-small.top());
+        small.pop();
+        
+        if (small.size() < large.size())
+        {
+            small.push(-large.top());
+            large.pop();
+        }
+    }
+    
+    double findMedian() {
+        return small.size()>large.size()? small.top():(small.top()-large.top()) / 2.0;
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
+
+//Python:
+class MedianFinder(object):
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.small = []
+        self.large = []
+        heapq.heapify(self.small)
+        heapq.heapify(self.large)
+
+    def addNum(self, num):
+        """
+        :type num: int
+        :rtype: None
+        """
+        heapq.heappush(self.small, -num)
+        heapq.heappush(self.large, -self.small[0])
+        heapq.heappop(self.small)
+        
+        if len(self.small) < len(self.large):
+            heapq.heappush(self.small, -self.large[0])
+            heapq.heappop(self.large)
+            
+        
+
+    def findMedian(self):
+        """
+        :rtype: float()
+        """
+        return -self.small[0] if len(self.small)>len(self.large) else -((self.small[0] - self.large[0])/2.0)
+                
+
+
+

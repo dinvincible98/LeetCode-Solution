@@ -1,0 +1,83 @@
+//C++:
+class Solution {
+public:
+    bool makesquare(vector<int>& matchsticks) {
+        int d = accumulate(matchsticks.begin(),matchsticks.end(),0);
+        if (d%4 != 0)   return false;
+
+        sort(matchsticks.rbegin(),matchsticks.rend());
+        int target=d/4;
+        vector<int> sideLength(4,0);
+         
+        return dfs(sideLength,matchsticks,0,target);
+        
+    }
+private:
+    bool dfs(vector<int>& sideLength, vector<int>& matches, int idx, int target)
+    {
+        if(idx==matches.size())   return sideLength[0]==sideLength[1] && 
+                                         sideLength[1]==sideLength[2] && 
+                                         sideLength[2]==sideLength[3];
+        
+        for (int i=0;i<4;++i)
+        {
+            if (sideLength[i]+matches[idx]>target)    continue;
+            
+            int j=i;
+            while(--j>=0)
+            {
+                if(sideLength[i]==sideLength[j])    break;
+            }
+            if(j!=-1)   continue;
+            sideLength[i] += matches[idx];
+            if (dfs(sideLength,matches,idx+1,target))   return true;
+            sideLength[i]-=matches[idx];
+        }
+        return false;
+        
+    }
+};
+
+Python:
+class Solution(object):
+    def makesquare(self, matches):
+        """
+        :type matchsticks: List[int]
+        :rtype: bool
+        """
+        d = sum(matches)
+        if d%4 != 0:    return False
+        target = d/4
+        
+        matches.sort(reverse=True)
+        
+        self.matches = matches
+        self.sideLength = [0]*4
+        
+        return self.dfs(self.sideLength,self.matches,0,target)
+    
+    
+    def dfs(self,sideLength,matches,idx,target):
+        if idx == len(matches): return sideLength[0]==sideLength[1] and  \
+                                       sideLength[1]==sideLength[2] and  \
+                                       sideLength[2]==sideLength[3]
+        
+        for i in range(4):
+            if sideLength[i]+matches[idx] > target: continue
+            
+            j = i
+            while j>=0:
+                j-=1
+                if sideLength[i] == sideLength[j]:   break;
+                
+            if j != -1:    continue
+            
+            sideLength[i] += matches[idx]
+            if self.dfs(sideLength,matches,idx+1,target):  return True
+            
+            sideLength[i] -= matches[idx]
+        
+        return False
+            
+
+
