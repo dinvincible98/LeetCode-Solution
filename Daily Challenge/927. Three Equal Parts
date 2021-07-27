@@ -1,0 +1,105 @@
+//C++:
+
+class Solution {
+public:
+    vector<int> threeEqualParts(vector<int>& arr) {
+        int n = arr.size();
+        
+        int cnt = accumulate(arr.begin(),arr.end(),0);
+        
+        if (cnt == 0)   return {0,n-1};
+        if (cnt%3 != 0) return {-1,-1};
+        
+        
+        int k = cnt/3;
+    
+        int i;
+        
+        for (i=0;i<n;++i)
+        {
+            if (arr[i] == 1)    break;
+        }
+        int start = i;
+        
+        int count1 = 0;
+        for (i=0;i<n;++i)
+        {
+            if (arr[i] == 1)    ++count1;
+            if (count1 == k+1)  break;
+        }
+        int mid = i;
+        
+        count1 = 0;
+        for (i=0;i<n;++i)
+        {
+            if (arr[i] == 1)    ++count1;
+            if (count1 == 2*k+1)    break;
+        }
+        int end = i;
+        
+        
+        while (end<n && arr[start]==arr[mid] && arr[mid]==arr[end])
+        {
+            ++start;
+            ++mid;
+            ++end;
+        }
+        
+        if (end == n)   return {start-1, mid};
+        
+        return {-1, -1};
+        
+        
+    }
+};
+
+//Python:
+class Solution(object):
+    def threeEqualParts(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: List[int]
+        """
+        
+        n = len(arr)
+        
+        cnt = sum(arr)
+        
+        if cnt == 0:  return [0,n-1]
+        if cnt%3 != 0:  return [-1,-1]
+        
+        k = cnt/3
+        
+        start = None
+        for i in range(n):
+            if arr[i] == 1: 
+                start = i
+                break
+        
+        count1 = 0
+        mid = None
+        for i in range(n):
+            if arr[i] == 1: count1+=1
+            if count1 == k+1:   
+                mid = i
+                break
+        
+        count1 = 0
+        end = None
+        for i in range(n):
+            if arr[i] == 1: count1+=1
+            if count1 == 2*k+1:   
+                end = i
+                break    
+        
+        while end<n and arr[start]==arr[mid] and arr[mid]==arr[end]:
+            start += 1
+            mid += 1
+            end += 1
+        
+        if end == n:    return [start-1, mid]
+        
+        return [-1,-1]
+        
+
+

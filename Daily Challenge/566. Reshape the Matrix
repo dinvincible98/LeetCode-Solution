@@ -1,0 +1,64 @@
+//C++:
+
+class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+        int n = mat.size();
+        int m = mat[0].size();
+        if (n*m != r*c) return mat;
+        
+        vector<int> list;
+        
+        for (auto& r:mat)
+        {
+            for (auto& c:r)
+            {
+                list.push_back(c);
+            }
+        }
+        
+        vector<vector<int>> res(r, vector<int>(c,0));
+        
+        int idx = 0;
+        for(int i=0;i<r;++i)
+        {
+            for (int j=0;j<c;++j)
+            {
+                res[i][j] = list[idx];
+                ++idx;
+            }
+        }
+        return res;
+    }
+};
+
+//Python:
+class Solution(object):
+    def matrixReshape(self, mat, r, c):
+        """
+        :type mat: List[List[int]]
+        :type r: int
+        :type c: int
+        :rtype: List[List[int]]
+        """
+        
+        n = len(mat)
+        m = len(mat[0])
+        
+        if n*m != r*c:  return mat
+        
+        l = []
+        for row in mat:
+            for col in row:
+                l.append(col)
+        
+        res = [[0 for i in range(c)] for j in range(r)]
+        idx = 0
+        for i in range(r):
+            for j in range(c):
+                res[i][j] = l[idx]
+                idx += 1
+        return res
+
+
+
