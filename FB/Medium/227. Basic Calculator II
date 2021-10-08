@@ -1,0 +1,51 @@
+//C++:
+
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int> stk;
+        
+        int temp = 0 , res = 0;
+        
+        char sign = '+';
+        
+        for (unsigned int i=0;i<s.size();++i)
+        {
+            if (isdigit(s[i]))
+            {
+                temp = 10 * temp + (s[i] - '0');
+            }
+                      
+            if (!isdigit(s[i]) && !isspace(s[i]) || i==s.size()-1) // operator
+            {
+                if (sign == '+')   stk.push(temp);
+                else if (sign == '-')   stk.push(-temp);
+                else
+                {
+                    int x;
+                    if (sign == '*')
+                    {
+                        x = stk.top() * temp;
+                    }
+                    else
+                    {
+                        x = stk.top() / temp;
+                    }
+                    stk.pop();
+                    stk.push(x);
+                }
+                sign = s[i];
+                temp = 0;
+            }
+        }
+        
+        while (!stk.empty())
+        {
+            res += stk.top();
+            stk.pop();
+        }
+        
+        return res;
+        
+    }
+};

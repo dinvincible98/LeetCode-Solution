@@ -1,0 +1,38 @@
+//C++:
+
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        std::unordered_map<char,int> mp;
+        int idx = 0;
+        for (auto& ch:order)
+        {
+            mp[ch] = idx;
+            ++idx;
+        }
+        
+        vector<int> list;
+        string sorted;
+        string rest;
+        
+        for (auto& ch:s)
+        {
+            if (mp.find(ch) != mp.end())    list.push_back(mp[ch]);
+            else    rest += ch;
+                
+        }
+        
+        sort(list.begin(),list.end());
+        for (auto& v:list)
+        {
+            for (auto& it:mp)
+            {
+                if (v == it.second) sorted += it.first;
+            }
+        }
+        
+        return sorted+rest;
+
+    }
+};
+

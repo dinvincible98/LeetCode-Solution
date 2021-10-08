@@ -1,0 +1,64 @@
+// c++
+
+class Solution {
+public:
+    string alienOrder(vector<string>& words) {
+        memset(graph, false, sizeof(graph));
+        memset(visited,-1,sizeof(visited));
+        
+        for (int i=0;i<words.size();++i)
+        {
+            string a = words[i];
+            
+            for (auto ch:a) visited[ch-'a'] = 0;    //'0' for visited state
+            for (int j=i+1;j<words.size();++j)
+            {
+                string b = words[j];
+                
+                auto [it_a,it_b] = mismatch(a.begin(),a.end(),b.begin());
+                if (it_a!=a.end() && it_b==b.end()) return "";
+                
+                if (it_a!=a.end() && it_b!=b.end())
+                {
+                    graph[*it_b-'a'][*it_a-'a'] = true;
+                }
+                
+                for (char ch:b)  visited[ch-'a'] = 0;
+            }
+        }
+        
+        for (int i=0;i<26;++i)
+        {
+            if (visited[i]==0 && dfs(i))    return "";
+        }
+        
+        return res;
+    }
+private:
+    
+    bool dfs(int node)
+    {
+        visited[node] = 1;
+        for (int child=0;child<26;++child)
+        {
+            if(graph[node][child])
+            {
+                if (visited[child] == 1)    return true;
+                if (visited[child]==0 && dfs(child))    return true;
+            }
+        }
+        
+        visited[node] = 2;
+        res += (char)('a'+node);
+        
+        return false;
+    }
+    
+    
+    
+    bool graph[26][26];
+    int visited[26];
+    
+    string res;
+    
+};

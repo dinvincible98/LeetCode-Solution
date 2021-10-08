@@ -1,0 +1,65 @@
+// c++
+
+class Solution {
+public:
+    vector<string> removeInvalidParentheses(string s) {
+        int num1 = 0, num2 = 0;
+        for (auto &ch:s)
+        {
+            num1 += ch=='(';
+            if (num1==0)    num2 += ch==')';
+            else    num1 -= ch==')';
+        }
+        
+        vector<string> res;
+        dfs(s,0,num1,num2,res);
+        
+        return res;
+    }
+
+private:
+    bool isValid(string s)
+    {
+        int sum = 0;
+        for (auto &ch:s)
+        {
+            if (ch == '(')    ++sum; 
+            else if (ch == ')')    --sum;
+            
+            if (sum<0)  return false;
+        }
+        return sum == 0;
+    }
+    
+    
+    void dfs(string s, int start, int num1, int num2, vector<string> &res)
+    {
+        if (num1==0 && num2==0)
+        {
+            if (isValid(s)) res.push_back(s);
+        }
+        else
+        {
+            for (int i=start;i<s.size();++i)
+            {
+                string temp = s;
+                if(num2==0 && num1>0 && temp[i]=='(')
+                {
+                    if (i==start || temp[i]!=temp[i-1])
+                    {
+                        temp.erase(i,1);
+                        dfs(temp,i,num1-1,num2,res);
+                    }
+                }
+                if (num2>0 && temp[i]==')')
+                {
+                    if (i==start || temp[i]!=temp[i-1])
+                    {
+                        temp.erase(i,1);
+                        dfs(temp,i,num1,num2-1,res);
+                    }
+                }
+            }
+        }
+    }
+};

@@ -1,0 +1,44 @@
+//C++:
+
+class Solution {
+public:
+    Solution(vector<int>& nums) {
+        nums_ = nums;
+    }
+    
+    int pick(int target) {
+        int n = nums_.size();
+        
+        int x = 0, res = -1;
+        
+        for (int i=0;i<n;++i)
+        {
+            if(nums_[i] != target)  continue;
+            if(x == 0)
+            {
+                res = i;
+                ++x;
+            }
+            else
+            {
+                ++x;
+                if(rand()%x == 0)
+                {
+                    res = i;
+                }
+            }
+        }
+        
+        return res;
+            
+    }
+    
+private:
+    vector<int> nums_;
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * int param_1 = obj->pick(target);
+ */
