@@ -1,0 +1,37 @@
+//C++:
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* parent;
+};
+*/
+
+class Solution {
+public:
+    Node* lowestCommonAncestor(Node* p, Node * q) {
+        helper(p);
+        
+        return helper(q);
+    }
+    
+private:
+    unordered_set<Node*> path;
+    
+    Node* helper(Node* node)
+    {
+        if(!node)   return nullptr;
+        if (path.count(node))   return node;
+        else
+        {
+            path.emplace(node);   
+        }
+        
+        return helper(node->parent);
+    }
+
+};

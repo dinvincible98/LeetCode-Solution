@@ -1,0 +1,57 @@
+//C++:
+
+class Solution {
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        unordered_map<string, int> mp;
+        
+        vector<int> union_find(accounts.size(),0);
+        
+        unordered_map<int,vector<string>> res_map;
+        
+        for(int i=0;i<accounts.size();++i)
+        {
+            union_find[i] = i;
+            for (int j=1;j<accounts[i].size();++j)
+            {
+                if(mp.find(accounts[i][j]) != mp.end())
+                {
+                    int root1 = find(union_find,i);
+                    int root2 = find(union_find,mp[accounts[i][j]]);
+                    union_find[root1] = root2;
+                }
+                else    mp[accounts[i][j]] = union_find[i];
+            }
+        }
+        
+        for (auto it:mp)
+        {
+            int idx = find(union_find,it.second);
+            res_map[idx].push_back(it.first);
+        }
+        
+        vector<vector<string>> res;
+        
+        for (auto it:res_map)
+        {
+            vector<string> email = it.second;
+            sort(email.begin(),email.end());
+            email.insert(email.begin(),accounts[it.first][0]);
+            res.push_back(email);
+        }
+        return res;    
+        
+    }
+    
+private:
+    int find(vector<int> &union_find, int idx)
+    {
+        while (union_find[idx] != idx)
+        {
+            idx = union_find[idx];
+        }
+        return idx;
+    }
+    
+    
+};

@@ -1,0 +1,55 @@
+//C++:
+
+struct Log
+{
+    int id;
+    string status;
+    int time_stamp;
+};
+
+class Solution {
+public:
+    vector<int> exclusiveTime(int n, vector<string>& logs) {
+        vector<int> times(n,0);
+        
+        stack<Log> stk;
+        
+        for (auto& log:logs)
+        {
+            stringstream ss(log);
+            string temp1, temp2, temp3;
+            
+            getline(ss,temp1,':');
+            getline(ss,temp2,':');
+            getline(ss,temp3,':');
+            
+            Log item {stoi(temp1),temp2,stoi(temp3)};
+            
+            if (item.status == "start")
+            {
+                stk.push(item);
+            }
+            else
+            {
+                assert(stk.top().id == item.id);
+                
+                int time_added = item.time_stamp - stk.top().time_stamp + 1;
+                
+                times[item.id] += time_added;
+                
+                stk.pop();
+                
+                if (!stk.empty())
+                {
+                    assert(stk.top().status == "start");
+                    times[stk.top().id] -= time_added; 
+                    
+                }
+                
+            }
+            
+        }
+        return times;
+        
+    }
+};

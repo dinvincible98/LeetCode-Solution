@@ -1,0 +1,60 @@
+//C++:
+
+class SparseVector {
+public:
+    
+    SparseVector(vector<int> &nums) {
+        int n = nums.size();
+        for (int i=0;i<n;++i)
+        {
+            if(nums[i] != 0) list.push_back({i,nums[i]});
+        }
+        
+        for (auto& it:list)
+        {
+            cout<<it.first<< " "<<it.second<<endl;
+        }
+    }
+    
+    // Return the dotProduct of two sparse vectors
+    int dotProduct(SparseVector& vec) {
+        vector<pair<int,int>> list2 = vec.list;
+        
+        unordered_map<int,vector<int>>  mp;
+        
+        for (auto &it:list)
+        {
+            mp[it.first].push_back(it.second);
+        }
+        
+        for (auto& it:list2)
+        {
+            if(mp.count(it.first))  mp[it.first].push_back(it.second);
+            
+        }
+        
+        int sum = 0;
+        for (auto &it:mp)
+        {
+            if(it.second.size() == 1)   continue;       // skip this one cuz has a zero
+            int dot = 1;
+            
+            for (auto &n:it.second)
+            {
+                
+                dot *= n;
+            }
+            sum += dot;
+        }
+        
+        
+        return sum;
+    }
+private:
+    vector<pair<int,int>> list;
+};
+
+// Your SparseVector object will be instantiated and called as such:
+// SparseVector v1(nums1);
+// SparseVector v2(nums2);
+// int ans = v1.dotProduct(v2);

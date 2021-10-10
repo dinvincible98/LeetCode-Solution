@@ -1,0 +1,31 @@
+//C++:
+
+class Solution {
+public:
+    Solution(vector<int>& w) {
+        w_.push_back(w[0]);
+        
+        for(int i=1;i<w.size();++i)
+        {
+            w_.push_back(w_[i-1]+w[i]);
+        }
+    }
+    
+    int pickIndex() {
+        int n= rand() % w_[w_.size()-1];
+        
+        auto it = upper_bound(w_.begin(),w_.end(),n);
+        
+        return it-w_.begin();       // upper bound index
+        
+    }
+    
+private:
+    vector<int> w_;
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(w);
+ * int param_1 = obj->pickIndex();
+ */
