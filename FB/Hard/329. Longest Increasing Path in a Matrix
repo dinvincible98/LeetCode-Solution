@@ -1,0 +1,49 @@
+// c++
+
+class Solution {
+public:
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        if(matrix.empty())  return 0;
+        
+        int m = matrix.size();
+        int n = matrix[0].size();
+    
+        vector<vector<int>> M(m,vector<int>(n,0)); 
+        
+        int max_cnt=0;
+        
+        for (int i=0;i<m;++i)
+        {
+            for (int j=0;j<n;++j)
+            {
+                int local_cnt = dfs(matrix, i, j, M);
+                max_cnt = max(max_cnt, local_cnt);
+            }
+        }
+        
+        
+        return max_cnt;
+    }
+    
+private:
+    
+    int dfs(vector<vector<int>> &mat, int i, int j, vector<vector<int>> &M)
+    {
+        if(M[i][j] > 0) return M[i][j];
+        
+        int cnt = 1;
+        
+        if(i-1>=0 && mat[i-1][j]>mat[i][j])    cnt = max(cnt, 1+dfs(mat,i-1,j,M));
+        if(i+1<mat.size() && mat[i+1][j]>mat[i][j])   cnt = max(cnt, 1+dfs(mat,i+1,j,M));
+        if(j-1>=0 && mat[i][j-1]>mat[i][j])    cnt = max(cnt, 1+dfs(mat,i,j-1,M));
+        if(j+1<mat[0].size() && mat[i][j+1]>mat[i][j])   cnt = max(cnt, 1+dfs(mat,i,j+1,M));
+        
+        M[i][j] = cnt;
+        
+        return cnt;
+        
+    }
+        
+};
+// TC: O(M*N)
+// SC: O(M*N)

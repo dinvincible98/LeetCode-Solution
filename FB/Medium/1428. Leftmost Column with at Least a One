@@ -13,35 +13,39 @@
 class Solution {
 public:
     int leftMostColumnWithOne(BinaryMatrix &binaryMatrix) {
-        vector<int> shape = binaryMatrix.dimensions();
-        int m = shape[0], n = shape[1];
+        vector<int> dim = binaryMatrix.dimensions();
+        int m = dim[0] , n = dim[1];
         
-        int left = 0, right = n-1, res = -1;
+        int left = 0, right = n - 1;
+        
+        int res = -1;
         
         while (left <= right)
         {
-            int mid = left + (right-left)/2;        // mid idx
-            if (existOne(binaryMatrix,m,mid))       // check entire column
+            int mid = left + (right - left) / 2;
+            if(existOne(binaryMatrix, m, mid))
             {
                 res = mid;
-                right = mid-1;  // keep seach left side
+                right = mid - 1;
             }
-            else    left = mid+1;       // keep seach right side
+            else    left = mid + 1;
         }
         
+        
         return res;
-    
     }
-    
-    
 private:
-    bool existOne(BinaryMatrix &m, int r, int c)
+    
+    bool existOne(BinaryMatrix &mat, int r, int c)
     {
         for (int i=0;i<r;++i)
         {
-            if(m.get(i,c) == 1)    return true;
+            if(mat.get(i,c) == 1)   return true;
         }
+        
         return false;
     }
-    
 };
+
+// TC: O(M*logN)
+// SC: O(1)

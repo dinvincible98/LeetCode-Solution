@@ -4,20 +4,26 @@
 class Solution {
 public:
     string simplifyPath(string path) {
-        string res, temp;
-        vector<string> stk;
-        stringstream ss(path);
+        string temp;
+        vector<string> v;
         
+        stringstream ss(path);
         while (getline(ss,temp,'/'))
         {
-            cout<<temp<<endl;
-            if (temp=="" || temp==".")  continue;
-            if (temp==".." && !stk.empty()) stk.pop_back();
-            else if(temp != "..")   stk.push_back(temp);
-            
+            if(temp=="" || temp==".")   continue;
+            if(temp==".." && !v.empty())  v.pop_back();
+            else if(temp != "..")   v.push_back(temp);
         }
         
-        for (auto& s:stk) res += '/'+ s;
+        string res = "";
+        
+        for(auto& s:v)  res += '/' + s;
+        
         return res.empty()? "/":res;
+        
+        
     }
 };
+
+// TC: O(N)
+// SC: O(N)

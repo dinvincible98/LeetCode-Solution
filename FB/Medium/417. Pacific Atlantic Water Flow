@@ -1,0 +1,61 @@
+//C++:
+
+class Solution {
+public:
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        if(heights.empty()) return {{}};
+        
+        int m = heights.size(), n = heights[0].size(); 
+        
+        vector<vector<bool>> pacific(m,vector<bool>(n,false));
+        vector<vector<bool>> atlantic(m,vector<bool>(n,false));
+        
+        for (int i=0;i<m;++i)
+        {
+            dfs(heights,i,0,pacific);
+            dfs(heights,i,n-1,atlantic);
+        }
+                
+        for (int j=0;j<n;++j)
+        {
+            dfs(heights,0,j,pacific);
+            dfs(heights,m-1,j,atlantic);
+        }
+        
+        vector<vector<int>> res;
+        
+        for(int i=0;i<m;++i)
+        {
+            for(int j=0;j<n;++j)
+            {
+                if(pacific[i][j] && atlantic[i][j]) res.push_back({i,j});   // if both reachable from two oceans push to result
+            }
+        }
+        
+        return res;
+        
+    }
+    
+    
+private:
+    vector<vector<int>> dirs{{1,0},{-1,0},{0,1},{0,-1}};
+    
+    void dfs(vector<vector<int>> &heights, int i, int j, vector<vector<bool>> &reach)
+    {
+        reach[i][j] = true;
+        
+        for (auto& d:dirs)
+        {
+            int new_row = i + d[0];
+            int new_col = j + d[1];
+            
+            if(new_row<0 || new_col<0 || new_row>=heights.size() || new_col>=heights[0].size() || reach[new_row][new_col] || heights[new_row][new_col] <heights[i][j])  continue;
+            
+            dfs(heights,new_row,new_col,reach);
+        }
+    }
+};
+
+
+// TC: O(M*N)
+// SC: O(M*N)

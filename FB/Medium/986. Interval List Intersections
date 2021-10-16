@@ -1,0 +1,29 @@
+//C++:
+
+class Solution {
+public:
+    vector<vector<int>> intervalIntersection(vector<vector<int>>& l1, vector<vector<int>>& l2) {
+        vector<vector<int>> res;
+        
+        int i=0, j=0;
+        
+        while (i<l1.size() && j<l2.size())
+        {
+            int low = max(l1[i][0],l2[j][0]);
+            int high = min(l1[i][1],l2[j][1]);
+            
+            if(low <= high)  res.push_back({low,high});
+            
+            if(l1[i][1] < l2[j][1]) i++;
+            else    j++;
+        }
+        
+        return res;
+        
+        
+    }
+};
+
+
+// TC: O(N+M)
+// TC: O(N+M)

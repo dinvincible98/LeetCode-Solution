@@ -1,0 +1,81 @@
+//C++:
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int pathSum(TreeNode* root, int targetSum) {
+        if(!root)   return 0;
+        
+        return dfs(root,targetSum) + pathSum(root->left,targetSum) + pathSum(root->right,targetSum);
+                
+    }
+private: 
+    int dfs(TreeNode* node, int sum)
+    {
+        if(!node)   return 0;
+        
+        int res = 0;
+        if(sum == node->val)    res++;
+        
+        res += dfs(node->left,sum-node->val);
+        res += dfs(node->right,sum-node->val);
+        
+        return res;
+    }
+};
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int pathSum(TreeNode* root, int targetSum) {
+        int cnt = 0;
+        dfs(root,0,targetSum,cnt);
+        
+        return cnt;
+    }
+    
+private:
+    unordered_map<int,int> mp;
+    
+    void dfs(TreeNode* node, int curr_sum, int target_sum, int &cnt)
+    {
+        if(!node)   return;
+        
+        curr_sum += node->val;
+        
+        if(curr_sum == target_sum)  cnt++;
+        
+        cnt += mp[curr_sum-target_sum];
+        
+        mp[curr_sum]++;
+        
+        dfs(node->left,curr_sum,target_sum,cnt);
+        dfs(node->right,curr_sum,target_sum,cnt);
+        
+        mp[curr_sum]--;
+    
+    }
+};
+
+// TC: O(N)
+// SC: O(N)

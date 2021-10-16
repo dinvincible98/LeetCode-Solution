@@ -27,6 +27,28 @@ public:
 };
 
 
+
+TC: O(n)
+SC:	O(n)
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        unordered_set<ListNode *> visited;
+        
+        while (head)
+        {
+            if(visited.count(head)) return true;
+            else
+            {
+                visited.insert(head);
+                head = head->next;
+            }
+        }
+        
+        return false;
+    }
+};
+
 Python:
 
 # Definition for singly-linked list.

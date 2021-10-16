@@ -1,0 +1,48 @@
+//C++:
+
+class WordDictionary {
+public:
+    WordDictionary() {
+        
+    }
+    
+    void addWord(string word) {
+        int n = word.size();
+        mp[n].push_back(word);
+    }
+    
+    bool search(string word) {
+        int n = word.size();
+        for (auto& s:mp[n])
+        {
+            if(isEqual(s,word)) return true;
+        }
+        
+        return false;
+    }
+    
+
+private:
+    
+    unordered_map<int,vector<string>> mp;       //<size of string, strings>
+    
+    bool isEqual(string a, string b)
+    {
+        for(int i=0;i<a.size();++i)
+        {
+            if(b[i] == '.') continue;
+            if(a[i] != b[i])    return false;
+        }
+        return true;
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */
+
+// TC:  O(m*n)		m is number of key, n is number of words with same keys
+// SC:  O(m*n)
