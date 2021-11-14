@@ -1,0 +1,56 @@
+//C++:
+class LRUCache {
+public:
+    LRUCache(int capacity) {
+        max_capacity = capacity;
+    }
+    
+    int get(int key) {
+        if(mp1.find(key) == mp1.end())  return -1;
+        updateLRU(key);
+        return mp1[key];
+    }
+    
+    void put(int key, int value) {
+        if (mp1.size()==max_capacity && mp1.find(key)==mp1.end())   evict();
+        updateLRU(key);
+        mp1[key] = value;
+    }
+    
+    void updateLRU(int key)
+    {
+        if (mp2.find(key) == mp2.end())
+        {
+            l.push_front(key);
+            mp2[key] = l.begin();
+            return;
+        }
+        l.erase(mp2[key]);
+        l.push_front(key);
+        mp2[key] = l.begin();
+    }
+    
+    void evict()
+    {
+        mp2.erase(l.back());
+        mp1.erase(l.back());
+        l.pop_back();
+    }
+    
+
+private:
+    int max_capacity;
+    unordered_map<int,int> mp1;
+    unordered_map<int,list<int>::iterator> mp2;
+    list<int> l;
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
+
+// TC: O(1)
+// SC: O(capacity)

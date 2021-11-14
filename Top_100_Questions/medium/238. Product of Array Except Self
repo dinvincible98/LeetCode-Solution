@@ -1,0 +1,30 @@
+//C++:
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        int left = 1, right = 1;
+        
+        vector<int> res(n,1);
+        
+        // update prefix product
+        for (int i=0;i<n;++i)
+        {
+            res[i] *= left;
+            left *= nums[i];
+        }
+        
+        // update suffix product
+        for (int j=n-1;j>=0;--j)
+        {
+            res[j] *= right;
+            right *= nums[j];
+        }
+        
+        
+        return res;
+    }
+};
+
+// TC: O(n)
+// SC: O(n)

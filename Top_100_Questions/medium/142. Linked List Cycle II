@@ -1,0 +1,41 @@
+//C++:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        if(!head || !head->next) return nullptr;
+        
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* start = head;
+        
+        while (fast->next && fast->next->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            
+            // has a circle in list
+            if(slow == fast)
+            {
+                // find start ptr
+                while(slow != start)
+                {
+                    slow = slow->next;
+                    start = start->next;
+                }
+                return start;
+            }
+        }
+        return nullptr;
+        
+    }
+};
+// TC: O(n)
+// SC: O(n)

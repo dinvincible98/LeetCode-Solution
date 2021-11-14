@@ -1,25 +1,22 @@
 //C++:
-
 class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
         if (wordDict.size() == 0)   return false;
         
-        unordered_set<string> S;
-        for (auto &w:wordDict)  S.insert(w);
+        unordered_set<string> S{wordDict.begin(),wordDict.end()};
         
-        
-        vector<bool> dp(s.size()+1,false);
+        vector<bool> dp(s.size()+1, false);
         dp[0] = true;
         
         for (int i=1;i<=s.size();++i)
         {
             for (int j=i-1;j>=0;--j)
             {
-                if(dp[j])
+                if (dp[j])
                 {
                     string temp = s.substr(j,i-j);
-                    if(S.count(temp))
+                    if (S.count(temp))
                     {
                         dp[i] = true;
                         break;
@@ -29,9 +26,7 @@ public:
         }
         
         return dp[s.size()];
-        
     }
 };
-
-// TC: O(N^3)
-// SC: O(N)
+// TC: O(n^2)
+// SC: O(n+1)

@@ -49,3 +49,53 @@ private:
  * int param_1 = obj->next();
  * bool param_2 = obj->hasNext();
  */
+ /**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class BSTIterator {
+public:
+    BSTIterator(TreeNode* root) {
+        inorder(root);
+        idx = -1;
+    }
+    
+    int next() {
+        idx += 1;
+        return sorted_list[idx]->val;
+    }
+    
+    bool hasNext() {
+        return idx+1 < sorted_list.size();
+    }
+private:
+    int idx;
+    vector<TreeNode* > sorted_list;
+    
+    void inorder(TreeNode* node)
+    {
+        if(!node)   return;
+        
+        inorder(node->left);
+        sorted_list.push_back(node);
+        inorder(node->right);
+    }
+};
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * BSTIterator* obj = new BSTIterator(root);
+ * int param_1 = obj->next();
+ * bool param_2 = obj->hasNext();
+ */
+
+
+// TC: O(N)
+// SC: O(N)

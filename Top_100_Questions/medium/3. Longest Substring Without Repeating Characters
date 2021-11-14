@@ -1,0 +1,17 @@
+//C++:
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        vector<int> charIndex(256,-1);
+        int curlen = 0, res = 0;
+        for (int i=0;i<s.size();++i)
+        {
+            curlen = min(curlen+1,i-charIndex[s[i]]);
+            res = max(res,curlen);
+            charIndex[s[i]] = i; 
+        }
+        return  res;
+    }
+};
+// TC: O(n)
+// SC: O(1)

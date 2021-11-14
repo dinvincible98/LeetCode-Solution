@@ -2,18 +2,38 @@
 
 class Solution {
 public:
-    int tribonacci(int n) {
-        vector<int> dp(3,0);
-        dp[0] = 0;
-        dp[1] = 1;
-        dp[2] = 1;
-        
-        
-        for (int i=3;i<=n;++i)
+    vector<string> addOperators(string num, int target) {
+        vector<string> res;
+        dfs(num, target, 0, 0, 0, "", res);
+        return res;
+    }
+private:
+    void dfs(string &s, int target, int pos, long pv, long cv, string r, vector<string> &res)
+    {
+        if(pos==s.size() && cv==target)
         {
-            dp[i%3] = dp[0] + dp[1] + dp[2];
+            res.push_back(r);
+            return;
         }
         
-        return dp[n%3];
+        for (int i=1;i<=s.size()-pos;++i)
+        {
+            
+            string temp = s.substr(pos,i);
+            
+            if(i>1 && temp[0]=='0') continue;
+            
+            long n = stol(temp);
+            
+            if(pos == 0)
+            {
+                dfs(s, target, i, n, n, temp, res);
+                continue;
+            }
+            
+            dfs(s, target, pos+i, n, cv+n, r+'+'+temp, res);
+            dfs(s, target, pos+i, -n, cv-n, r+'-'+temp, res);
+            dfs(s, target, pos+i, pv*n, cv-pv+pv*n, r+'*'+temp, res);
+        }
     }
 };

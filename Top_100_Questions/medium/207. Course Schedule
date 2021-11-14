@@ -1,0 +1,34 @@
+//C++:
+class Solution {
+public:
+    bool canFinish(int n, vector<vector<int>>& p) {
+        vector<vector<int>> graph(n,vector<int>());
+        vector<int> re_classes(n,0);
+        vector<int> res;
+        
+        for (auto& it:p)
+        {
+            graph[it[1]].push_back(it[0]);
+            re_classes[it[0]]++;
+        }
+        
+        for (int i=0;i<n;++i)
+        {
+            if(re_classes[i]==0)  res.push_back(i); // no required class
+        }
+        
+        for (int i=0;i<res.size();++i)
+        {
+            for (auto& v:graph[res[i]])
+            {
+                if(--re_classes[v]==0)  res.push_back(v);
+            }
+        }
+        return res.size() == n;
+        
+        
+    }
+};
+
+// TC: O(V+E)
+// SC: O(V+E)

@@ -1,0 +1,31 @@
+//C++:
+class Solution {
+public:
+    vector<int> partitionLabels(string s) {
+        vector<int> res;
+        vector<int> mp(26,-1);
+        
+        for (int i=0;i<s.size();++i)
+        {
+            mp[s[i]-'a'] = i;       //last idx of the char
+        }
+        
+        int j = 0, end = 0;
+        
+        for (int i=0;i<s.size();++i)
+        {
+            j = max(j,mp[s[i]-'a']);
+            if (i == j)
+            {
+                res.push_back(i-end+1);     // size of string
+                end = i+1;                  // add 1 to idx
+            }
+        }
+        
+        return res;
+        
+        
+    }
+};
+// TC: O(n)
+// SC: O(n)

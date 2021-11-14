@@ -1,0 +1,56 @@
+//C++:
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<char> stk;
+        
+        for (int i=0;i<s.size();++i)
+        {
+            if(s[i] != ']')
+            {
+                stk.push(s[i]);
+            }
+            else
+            {
+                string curr = "";
+                while (stk.top() != '[')
+                {
+                    curr = stk.top() + curr;
+                    stk.pop();
+                }
+                
+                stk.pop();          // for '['
+                string num = "";
+                
+                while (!stk.empty() && isdigit(stk.top()))
+                {
+                    num = stk.top() + num;
+                    stk.pop();
+                }
+                
+                int k = stoi(num);          // k times
+                
+                while (k--)
+                {
+                    for (auto& c:curr)
+                    {
+                        stk.push(c);
+                    }
+                }
+            }
+        }
+        
+        string res = "";
+        while (stk.size())
+        {
+            res = stk.top() + res;
+            stk.pop();
+        }
+        
+        return res;
+        
+    }
+};
+
+// TC: O(maxK^countK * n)
+// SC: O(sum(maxK^countK * n))
