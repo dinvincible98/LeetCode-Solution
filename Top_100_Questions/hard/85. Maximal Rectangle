@@ -1,0 +1,41 @@
+//C++:
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        if(matrix.empty())  return 0;
+        int m = matrix.size(), n = matrix[0].size()+1;
+        int h = 0, w = 0, res = 0;
+        
+        vector<int> height(n,0);
+        
+        for (int i=0;i<m;++i)
+        {
+            stack<int> stk;
+            for (int j=0;j<n;++j)
+            {
+                if(j < n-1)
+                {
+                    if(matrix[i][j] == '1') height[j]++;
+                    else height[j] = 0;
+                }
+                
+                
+                while (!stk.empty() && height[stk.top()]>=height[j])
+                {
+                    h = height[stk.top()];
+                    stk.pop();
+                    w = stk.empty()? j:j-stk.top() - 1;
+                    if(h*w > res)   res = h * w;
+                }
+                
+                stk.push(j);
+            }
+        }
+        
+        return res;
+        
+    }
+};
+
+// TC: O(n^2)
+// SC: O(mn)

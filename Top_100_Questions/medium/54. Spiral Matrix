@@ -1,0 +1,33 @@
+//C++:
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<vector<int>> dirs{{0,1},{1,0},{0,-1},{-1,0}};    // right,bot,left,top
+        vector<int> res;
+        
+        const int m = matrix.size();
+        const int n = matrix[0].size();
+        
+        vector<int> steps{n,m-1}; // <horizontal move, vertical move>
+        
+        int i_dir = 0;      // index of directions
+        int i_row = 0, i_col = -1;      // initial pos, index of grid
+        
+        while (steps[i_dir%2])
+        {
+            for (int i=0;i<steps[i_dir%2];++i)
+            {
+                i_row += dirs[i_dir][0];
+                i_col += dirs[i_dir][1];
+                res.push_back(matrix[i_row][i_col]);
+            }
+            steps[i_dir%2]--;
+            i_dir = (i_dir+1)%4;
+        }
+        
+        return res;
+
+    }
+};
+// TC: O(m*n)
+// SC: O(n)

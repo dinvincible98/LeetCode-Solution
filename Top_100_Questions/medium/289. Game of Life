@@ -1,0 +1,53 @@
+//C++:
+class Solution {
+public:
+    void gameOfLife(vector<vector<int>>& board) {
+        
+        if(board.empty())   return;
+        
+        vector<vector<int>> dirs{{1,0},{-1,0},{0,1},{0,-1},{1,1},{1,-1},{-1,1},{-1,-1}};
+        
+        const int m = board.size();
+        const int n = board[0].size();
+        
+        for (int i=0;i<m;++i)
+        {
+            for (int j=0;j<n;++j)
+            {
+                int lives = 0;
+                
+                // search in 8 dirs, cnt lives
+                for (int k=0;k<dirs.size();++k)
+                {
+                    int r = i+dirs[k][0];
+                    int c = j+dirs[k][1];
+                    
+                    if(r<0 || c<0 || r>=m || c>=n)  continue;
+                    
+                    if(board[r][c] & 1) lives++;
+                }
+                
+                if(board[i][j] == 0)
+                {
+                    if(lives == 3)  board[i][j] = 2;        // dead->live
+                }
+                else
+                {
+                    if(lives<2 || lives>3)    board[i][j] = 1;    // live->dead
+                    else    board[i][j] = 3;            // live->live
+                }
+            }
+        }
+        
+        
+        for (int i=0;i<m;++i)
+        {
+            for (int j=0;j<n;++j)
+            {
+                board[i][j] >>= 1;
+            }
+        }
+    }
+};
+// TC: O(mxn)
+// SC: O(1)

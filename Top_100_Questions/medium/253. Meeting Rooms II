@@ -1,0 +1,27 @@
+//C++:
+class Solution {
+public:
+    int minMeetingRooms(vector<vector<int>>& intervals) {
+        map<int,int> mp;    // track the change of current meeting room <time, change of room>
+        
+        for (auto& it:intervals)
+        {
+            mp[it[0]]++;
+            mp[it[1]]--;
+        }
+        
+        int cnt = 0, max_cnt = 0;
+        for (auto& it:mp)
+        {
+            cnt += it.second;
+            max_cnt = max(cnt,max_cnt);
+        }
+        
+        return max_cnt;
+        
+        
+    }
+};
+
+// TC: O(logn)
+// SC: O(n)

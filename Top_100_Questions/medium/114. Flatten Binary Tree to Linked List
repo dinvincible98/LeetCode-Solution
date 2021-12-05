@@ -13,23 +13,33 @@
 class Solution {
 public:
     void flatten(TreeNode* root) {
-        while (root)
+        if (!root)  return;
+        
+        TreeNode* node = root;
+        
+        while (node)
         {
-            if(root->left)
+            if(node->left)
             {
-                flatten(root->left);
-                TreeNode* right = root->right;
-                root->right = root->left;
-                root->left = NULL;
-                while (root->right)
+                // find rightmost node
+                TreeNode* rightmost = node->left;
+                while (rightmost->right)
                 {
-                    root = root->right;
+                    rightmost = rightmost->right;
                 }
-                root->right = right;
+                
+                // rewrite connections
+                rightmost->right = node->right;
+                node->right = node->left;
+                node->left = nullptr;
             }
-            root = root->right;
-        }
+            
+            // move on to right side of tree
+            node = node->right;
+        }   
+        
     }
 };
+
 // TC: O(n)
-// SC: O(n)
+// SC: O(1)
