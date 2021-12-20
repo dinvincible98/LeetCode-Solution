@@ -1,0 +1,50 @@
+//C++:
+class RandomizedSet {
+public:
+    RandomizedSet() {
+        
+    }
+    
+    bool insert(int val) {
+        if(!mp.count(val))
+        {
+            l.push_back(val);
+            mp[val] = l.size()-1;       // <val,idx>
+            return true;
+        }
+        return false;
+        
+    }
+    
+    bool remove(int val) {
+        if(!mp.count(val))  return false;
+        
+        // update list
+        int last = l.back();
+        l[mp[val]] = last;
+        l.pop_back();
+        
+        // update map
+        mp[last] = mp[val];
+        mp.erase(val);
+        return true;
+    }
+    
+    int getRandom() {
+        return l[rand()%l.size()];
+    }
+private:
+    vector<int> l;
+    unordered_map<int,int> mp; //<key,idx in list>
+};
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet* obj = new RandomizedSet();
+ * bool param_1 = obj->insert(val);
+ * bool param_2 = obj->remove(val);
+ * int param_3 = obj->getRandom();
+ */
+
+// TC: O(1)
+// SC: O(n)

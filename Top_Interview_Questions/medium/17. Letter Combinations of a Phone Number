@@ -1,0 +1,72 @@
+//C++:
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        if (digits.empty()) return {};
+        
+        vector<string> res{""};
+        
+        for (auto& d:digits)
+        {
+            vector<string> temp;
+            for (auto& c:list[d-'0'])
+            {
+                for (auto& r:res)
+                {
+                    temp.push_back(r+c);
+                }
+            }
+            res.swap(temp);
+        }
+        
+        return res;
+        
+        
+        
+        
+        
+    }
+private:
+    const vector<string> list{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+};
+
+// TC: O(4^n)
+// SC: O(4^n)
+
+
+// Backtrack
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {        
+        if(digits.empty())  return {};
+        
+        vector<string> res;
+        
+        backtrack(res,digits,"",0);
+        
+        return res;    
+    }
+    
+private:
+    const vector<string> list{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+
+    void backtrack(vector<string>& res, string digits, string path, int idx)
+    {
+        if(idx == digits.size())
+        {
+            res.push_back(path);
+            return;
+        }
+        string letters = list[digits[idx] - '0'];
+        for (auto& c:letters)
+        {
+            backtrack(res,digits,path+c,idx+1);
+        }
+    }
+};
+
+
+
+// TC: O(4^N * N)
+// SC: O(N)
+

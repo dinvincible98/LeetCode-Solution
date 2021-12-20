@@ -1,0 +1,21 @@
+//C++:
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+        long a = 0, b = sqrt(c);
+        
+        
+        while(a <= b)
+        {
+            long sum = a*a + b*b;
+            
+            if(sum > c) b--;
+            else if(sum < c)    a++;
+            else    return true;
+        }
+        
+        return false;
+    }
+};
+// TC: O(c^0.5logc)
+// SC: O(1)

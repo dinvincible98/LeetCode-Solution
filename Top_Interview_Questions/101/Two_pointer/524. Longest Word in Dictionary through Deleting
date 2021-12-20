@@ -1,0 +1,33 @@
+//C++:
+class Solution {
+public:
+    string findLongestWord(string s, vector<string>& d) {
+        string res = "";
+        for(auto& w:d)
+        {
+            if(helper(w,s))	// found the word
+            {
+                if(w.size()>res.size() || (w.size()==res.size() && w<res))	// track longest word . If same size use smallest lexi order one
+                {
+                    res = w;
+                }
+            }
+        }
+        return res;
+    }
+    
+private:
+    bool helper(string word,string s)
+    {
+        int i=0, j = 0;
+        while(i<word.size() && j<s.size())
+        {
+            if(word[i] == s[j]) i++;
+            j++;
+        }
+        
+        return i==word.size();	// found the word
+    }
+};
+// TC: O(s+t)
+// SC: O(s+t)

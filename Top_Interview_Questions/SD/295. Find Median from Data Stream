@@ -1,0 +1,47 @@
+//C++:
+class MedianFinder {
+public:
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {
+        pq1.push(num);
+        pq2.push(pq1.top());
+        pq1.pop();
+        
+        if(pq1.size() < pq2.size())
+        {
+            pq1.push(pq2.top());
+            pq2.pop();
+        }
+        
+    }
+    
+    double findMedian() {
+        return pq1.size()>pq2.size()? pq1.top():(double)(pq1.top()+pq2.top())/2;
+    }
+    
+private:
+    priority_queue<int> pq1;         // max-heap
+    priority_queue<int,vector<int>,greater<int>> pq2;    // min-heap
+    
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
+
+/**
+ * Your UndergroundSystem object will be instantiated and called as such:
+ * UndergroundSystem* obj = new UndergroundSystem();
+ * obj->checkIn(id,stationName,t);
+ * obj->checkOut(id,stationName,t);
+ * double param_3 = obj->getAverageTime(startStation,endStation);
+ */
+
+// TC: O(logn)
+// SC: O(n)

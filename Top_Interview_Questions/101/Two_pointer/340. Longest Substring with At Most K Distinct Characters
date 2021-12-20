@@ -1,0 +1,29 @@
+//C++:
+class Solution {
+public:
+    int lengthOfLongestSubstringKDistinct(string s, int k) {
+        int n = s.size();
+        
+        int left = 0, right = 0, distinct = 0, len = 0;
+        
+        int cnt[128] = {0};       // chars table cnt times
+        
+        while(right < n)
+        {
+            if(!cnt[s[right++]]++)  ++distinct;
+            
+            if(distinct <= k)   len = max(len, right-left); // keep track longest length
+            
+            while(distinct > k)
+            {
+                if(!--cnt[s[left++]])   --distinct;             // move 
+            }            
+        }
+        
+        return len;
+        
+        
+    }
+};
+// TC: O(n)
+// SC: O(1)

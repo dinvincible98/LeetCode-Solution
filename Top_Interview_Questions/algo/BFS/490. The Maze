@@ -1,0 +1,50 @@
+//C++:
+class Solution {
+public:
+    bool hasPath(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {
+        const int m = maze.size();
+        const int n = maze[0].size();
+        vector<vector<bool>> visited(m,vector<bool>(n,false));
+        
+        const vector<vector<int>> dirs{{1,0},{-1,0},{0,-1},{0,1}};
+        
+        visited[start[0]][start[1]] = true;
+        queue<pair<int,int>> q;
+        q.push({start[0],start[1]});
+        
+        while (!q.empty())
+        {
+            int row = q.front().first;
+            int col = q.front().second;
+            q.pop();
+            
+            if(row==destination[0] && col==destination[1])  return true;
+            
+            for (auto& d:dirs)
+            {
+                int x = row + d[0];
+                int y = col + d[1];
+                
+                while (x>=0 && y>=0 && x<m && y<n && maze[x][y]==0)
+                {
+                    x += d[0];
+                    y += d[1];
+                }
+                
+                x -= d[0];
+                y -= d[1];
+                
+                if(!visited[x][y])
+                {
+                    visited[x][y] = true;
+                    q.push({x,y});
+                }
+            }
+        }
+        
+        return false;
+        
+    }
+};
+// TC: O(mn)
+// SC: O(mn)

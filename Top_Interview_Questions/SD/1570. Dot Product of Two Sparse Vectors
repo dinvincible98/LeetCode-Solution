@@ -1,0 +1,40 @@
+//C++:
+class SparseVector {
+public:
+    
+    SparseVector(vector<int> &nums) {
+
+        for (int i=0;i<nums.size();i++)
+        {
+            if (nums[i] != 0)   mp[i] = nums[i];
+        }
+    }
+
+    // Return the dotProduct of two sparse vectors
+    int dotProduct(SparseVector& vec) {
+
+        int res = 0;
+        for (auto& it:mp)
+        {
+            if(vec.mp.count(it.first))  res += it.second * vec.mp[it.first];   // if same idx in both map, calculate dot product.
+        }
+
+        return res;        
+    }
+private:
+    unordered_map<int, int> mp;     // <idx, num>
+};
+
+// Your SparseVector object will be instantiated and called as such:
+// SparseVector v1(nums1);
+// SparseVector v2(nums2);
+// int ans = v1.dotProduct(v2);
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
+
+// TC: O(l)
+// SC: O(l)

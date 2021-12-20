@@ -1,0 +1,78 @@
+//C++:
+class Solution {
+public:
+    int shortestBridge(vector<vector<int>>& grid) {
+        const int m = grid.size();
+        const int n = grid[0].size();
+        
+        bool flipped = false;
+        queue<pair<int,int>> q;
+        
+        // dfs find 1st island change 1->2
+        for(int i=0;i<m;++i)
+        {
+            if(flipped) break;
+            for (int j=0;j<n;++j)
+            {
+                if(grid[i][j] == 1)
+                {
+                    dfs(q,grid,m,n,i,j);
+                    flipped = true;
+                    break;
+                }
+            }
+        }
+        
+        // bfs search for 2nd island, 0->2
+        int level = 0;
+        
+        while (!q.empty())
+        {
+            ++level;
+            int sz = q.size();
+            while (sz--)
+            {
+                auto [x,y] = q.front();
+                q.pop();
+                for (auto& d:dirs)
+                {
+                    int nx = x+d[0];
+                    int ny = y+d[1];
+                    
+                    if(nx>=0 && ny>=0 && nx<m && ny<n)
+                    {
+                        if(grid[nx][ny] == 2) continue;
+                        if(grid[nx][ny] == 1) return level; // find connection
+                        q.push({nx,ny});
+                        grid[nx][ny] = 2;       // change 0->2
+                    }
+                }
+            }
+        }
+        
+        return 0;
+    }
+    
+private:
+    const vector<vector<int>> dirs{{1,0},{-1,0},{0,1},{0,-1}};
+    
+    void dfs(queue<pair<int,int>>& q,vector<vector<int>>& grid, int m,int n, int i, int j)
+    {
+        if(i<0 || j<0 || i>=m || j>=n || grid[i][j]==2) return;
+        
+        if(grid[i][j] == 0)
+        {
+            q.push({i,j});
+            return;
+        }
+        
+        grid[i][j] = 2;
+        dfs(q,grid,m,n,i-1,j);
+        dfs(q,grid,m,n,i+1,j);
+        dfs(q,grid,m,n,i,j+1);
+        dfs(q,grid,m,n,i,j-1);
+    }
+    
+};
+// TC: O(m*n)
+// SC: O(m*n)

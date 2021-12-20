@@ -1,0 +1,48 @@
+//C++:
+class Solution {
+public:
+    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+        unordered_map<int,vector<int>> mp;
+        for (int i=0;i<routes.size();++i)
+        {
+            for (auto& n:routes[i])
+            {
+                mp[n].push_back(i);         // <stop, route>
+            }
+        }
+        
+        queue<pair<int,int>> q;
+        q.push({source, 0});        // <source, cnt>
+        
+        unordered_set<int> seen{source};
+        
+        while (!q.empty())
+        {
+            int stop = q.front().first;
+            int cnt = q.front().second;
+            q.pop();
+            
+            if(stop == target)  return cnt;
+            
+            for (auto& i:mp[stop])
+            {
+                for (auto& j:routes[i])
+                {
+                    if(!seen.count(j))
+                    {
+                        seen.insert(j);
+                        q.push({j,cnt+1});
+                    }
+                }
+                
+                routes[i].clear();      // removed visited stops
+            }
+        }
+        
+        return -1;
+        
+    }
+};
+
+// TC: O(n^2)
+// SC: O(n^2)

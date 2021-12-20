@@ -1,0 +1,38 @@
+//C++:
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();
+        int i = 0;
+        int max_len = 0; 
+        int start_idx = 0;
+        
+        while (i < n)
+        {
+            int left = i, right = i;
+            
+            // find mid of pali
+            while(right<n && s[right]==s[right+1])  right++;
+            
+            i = right+1;
+            
+            // expand both sides
+            while(left>0 && right<n && s[left-1]==s[right+1])
+            {
+                left--;
+                right++;
+            }
+            
+            int len = right-left+1;
+            if(len > max_len)
+            {
+                max_len = len;
+                start_idx = left;
+            }
+        }
+          
+        return s.substr(start_idx,max_len);
+    }
+};
+// TC: O(n)
+// SC: O(1)

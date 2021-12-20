@@ -1,0 +1,48 @@
+//C++:
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        typedef pair<int,int> pii;
+        
+        vector<vector<pii>> g(n+1);
+        for (auto& it:times)
+        {
+            g[it[0]].push_back({it[1],it[2]});  // <src , (dst,weight)>
+        }
+        
+        // dist to all nodes
+        vector<int> dist(n+1,INT_MAX);
+        dist[k] = 0; 
+        
+        priority_queue<pii,vector<pii>,greater<pii>>    pq;
+        pq.push({0,k});
+        
+        while (!pq.empty())
+        {
+            auto top = pq.top();
+            pq.pop();
+            
+            auto node = top.second;
+
+            for (auto& it:g[node])
+            {
+                auto u = it.first;      // node
+                auto v = it.second;     // cost 
+                if(dist[u] > v+dist[node])
+                {
+                    dist[u] = v+dist[node];
+                    pq.push({dist[u],u});
+                }
+            }
+        }
+        
+        int max = *max_element(dist.begin()+1,dist.end());
+        
+        return max==INT_MAX? -1:max;
+        
+        
+    }
+};
+
+// TC: O(ElogN)	E is number of edges
+// SC: O(N)	N is number of nodes

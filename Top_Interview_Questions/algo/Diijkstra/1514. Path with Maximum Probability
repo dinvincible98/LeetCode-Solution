@@ -1,0 +1,41 @@
+//C++:
+class Solution {
+public:
+    double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start, int end) {
+        vector<vector<pair<int,double>>> graph(n);
+        for(int i=0;i<edges.size();++i)
+        {
+            graph[edges[i][0]].push_back({edges[i][1],succProb[i]});
+            graph[edges[i][1]].push_back({edges[i][0],succProb[i]});    // undirected graph
+        }
+        
+        vector<double> prob(n,0.0);
+        prob[start] = 1.0;      // inital start point
+        
+        priority_queue<pair<double,int>> pq;
+        pq.push({1.0,start});
+        
+        while (!pq.empty())
+        {
+            auto curr = pq.top().second;
+            auto prev_prob = pq.top().first;
+            pq.pop();
+            
+            for (auto& v:graph[curr])
+            {
+                if(prev_prob*v.second > prob[v.first])
+                {
+                    prob[v.first] = prev_prob*v.second;
+                    pq.push({prob[v.first],v.first});
+                }
+            }
+        }
+        
+        return prob[end];
+        
+        
+        
+    }
+};
+// TC: O(Elogn)
+// SC: O(n)

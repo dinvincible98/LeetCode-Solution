@@ -1,0 +1,39 @@
+//C++:
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> res;
+        
+        backtrack(res,0,nums);
+        
+        return res;
+        
+    }
+    
+private:
+    void backtrack(vector<vector<int>>& res, int idx, vector<int> nums)
+    {
+        if(idx == nums.size())
+        {
+            res.push_back(nums);
+        }
+        else
+        {
+            for (int j=idx;j<nums.size();++j)
+            {
+                if(j==idx || nums[j]!=nums[idx])
+                {
+                    swap(nums[idx],nums[j]);
+                    backtrack(res,idx+1,nums);
+                }
+            }
+        }
+        
+        
+    }
+    
+};
+
+// TC: O(n!)
+// SC: O(n)

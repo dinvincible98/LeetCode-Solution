@@ -1,0 +1,29 @@
+//C++:
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        int n = s.size();
+        unordered_map<char,int> mp;
+        for(auto& c:s)
+        {
+            mp[c]++;
+        }
+        
+        int mid = 0;
+        while (mid<n && mp[s[mid]]>=k)   ++mid;
+        if(mid == n)    return n;
+        int left = longestSubstring(s.substr(0,mid),k);
+        
+        while (mid<n && mp[s[mid]]<k)   ++mid;
+        if(mid==n)   return left;
+        
+        int right = longestSubstring(s.substr(mid),k);
+        
+        return max(left, right);
+        
+        
+    }
+};
+
+// TC: O(n^2)
+// SC: O(1)

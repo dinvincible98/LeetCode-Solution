@@ -1,0 +1,58 @@
+//C++:
+class Solution {
+public:
+    int shortestDistance(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {
+        const int m = maze.size();
+        const int n = maze[0].size();
+        
+        vector<vector<int>> dist(m,vector<int>(n,INT_MAX));    
+        auto comp = [&](const auto& p1, const auto& p2)
+        {
+            return dist[p1.first][p1.second] > dist[p2.first][p2.second];
+        };
+        
+        priority_queue<pii,vector<pii>,decltype(comp)> pq(comp);        // min heap
+        
+        dist[start[0]][start[1]] = 0;       // start point
+        pq.push({start[0],start[1]});
+        
+        while (!pq.empty())
+        {
+            auto xy = pq.top();
+            if(xy.first==destination[0] && xy.second==destination[1])   return dist[xy.first][xy.second];
+            
+            for (auto& d:dirs)
+            {
+                int x = xy.first, y = xy.second;
+                int cnt = 0;
+                while (x>=0 && x<m && y>=0 && y<n && maze[x][y]==0)
+                {
+                    x += d[0];
+                    y += d[1];
+                    ++cnt;          // add one more dist for every move
+                }
+                
+                x -= d[0];
+                y -= d[1]; 
+                --cnt;
+                
+                if(cnt+dist[xy.first][xy.second] < dist[x][y])
+                {
+                    dist[x][y] = cnt + dist[xy.first][xy.second];
+                    pq.push({x,y});
+                }
+            }
+            
+            pq.pop();            
+        }
+        return -1;      // not reachable
+    }
+    
+private:
+    vector<vector<int>> dirs{{1,0},{-1,0},{0,-1},{0,1}};
+    
+    typedef pair<int,int> pii;
+
+};
+// TC: O(mn*logmn)
+// SC: O(mn)

@@ -1,0 +1,39 @@
+//C++:
+class TimeMap {
+public:
+    TimeMap() {
+        
+    }
+    
+    void set(string key, string value, int timestamp) {
+        mp[key][timestamp] = value;
+    }
+    
+    string get(string key, int timestamp) {
+        auto it = mp[key].upper_bound(timestamp);       // max timestamp 
+        if(it == mp[key].begin())    return "";         // does not exist
+        it--;           // prev
+        return it->second;           
+    }
+
+private:
+    unordered_map<string,map<int,string>> mp;        //<key,<time,value>>
+    
+    
+};
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap* obj = new TimeMap();
+ * obj->set(key,value,timestamp);
+ * string param_2 = obj->get(key,timestamp);
+ */
+/**
+ * Your UndergroundSystem object will be instantiated and called as such:
+ * UndergroundSystem* obj = new UndergroundSystem();
+ * obj->checkIn(id,stationName,t);
+ * obj->checkOut(id,stationName,t);
+ * double param_3 = obj->getAverageTime(startStation,endStation);
+ */
+
+

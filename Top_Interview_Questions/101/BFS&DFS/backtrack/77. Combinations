@@ -1,0 +1,32 @@
+//C++:
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> res;
+        vector<int> path(k,0);
+        int cnt = 0;
+        backtrack(res,path,cnt,1,n,k);
+        return res;
+    }
+    
+private:
+    
+    void backtrack(vector<vector<int>>& res, vector<int>& path, int cnt, int start, int n, int k)
+    {
+        if(cnt == k)
+        {
+            res.push_back(path);
+            return;
+        }
+        
+        for (int i=start;i<=n;++i)
+        {
+            path[cnt++] = i;
+            backtrack(res,path,cnt,i+1,n,k);
+            --cnt;      // erase cnt
+        }
+    }
+};
+
+// TC: O(n!)
+// SC: O(n)

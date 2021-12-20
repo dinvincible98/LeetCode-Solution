@@ -1,0 +1,45 @@
+//C++:
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        const int m = board.size();
+        const int n = board[0].size();
+        
+        for (int i=0;i<m;++i)
+        {
+            for (int j=0;j<n;++j)
+            {
+                if(dfs(board,m,n,i,j,word)) return true;
+            }
+        }
+        
+        return false;
+    }
+    
+private:
+    bool dfs(vector<vector<char>>& board, int m, int n, int i, int j, string& word)
+    {
+        if(word.empty())    return true;
+        
+        if(i<0 || j<0 || i>=m || j>=n || board[i][j]!=word.front()) return false;
+        
+        char c = board[i][j];
+        board[i][j] = '*';      // not search back
+        string temp = word.substr(1);
+        
+        bool res = dfs(board,m,n,i+1,j,temp) ||
+                   dfs(board,m,n,i-1,j,temp) ||
+                   dfs(board,m,n,i,j+1,temp) ||
+                   dfs(board,m,n,i,j-1,temp);
+        
+        board[i][j] = c;
+        
+        return res;
+        
+    }
+    
+    
+};
+    
+// TC: O(n^3l)
+// SC: O(l)

@@ -1,0 +1,38 @@
+//C++:
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if(nums.empty())    return {-1,-1};
+        
+        int left = 0, right = nums.size()-1;
+        
+        // find leftmost idx
+        while (left < right)
+        {
+            int mid = (left+right)/2;
+            if(nums[mid] >= target) right = mid;
+            else    left = mid+1;
+        }
+        
+        // not exist
+        if(nums[left] != target)    return {-1,-1};
+        
+        int temp = left;
+        
+        left = 0, right = nums.size()-1;
+        
+        // find rightmost idx
+        while (left < right)
+        {
+            int mid = (left+right+1)/2;
+            if(nums[mid] <= target)   left = mid;
+            else    right = mid-1;
+        }
+        
+        return {temp,left};        
+        
+    }
+};
+
+// TC: O(logn)
+// SC: O(1)

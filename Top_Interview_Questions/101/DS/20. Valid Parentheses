@@ -1,0 +1,25 @@
+//C++:
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> stk;
+        
+        for (auto& c:s)
+        {
+            if(c=='(')  stk.push(')');
+            else if(c=='[') stk.push(']');
+            else if(c=='{') stk.push('}');
+            else
+            {
+                if(stk.empty() || c!=stk.top()) return false;
+                stk.pop();
+            }
+        }
+        
+        return stk.empty();
+        
+    }
+};
+
+// TC: O(n)
+// SC: O(n)

@@ -1,0 +1,81 @@
+//C++:
+class Solution {
+public:        
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        const int m = board.size();
+        const int n = board[0].size();
+        
+        TrieNode* root = buildTrie(words);
+        vector<string> res;
+        
+        for (int i=0;i<m;++i)
+        {
+            for (int j=0;j<n;++j)
+            {
+                dfs(board,i,j,root,res);
+            }
+        }
+        
+        return res;
+    }
+    
+private:
+    struct TrieNode
+    {
+        
+        TrieNode():word("")
+        {
+            for (int i=0;i<26;++i)
+            {
+                children[i] = nullptr; 
+            }
+        }
+        
+        TrieNode *children[26];
+        string word;
+    };
+    
+    TrieNode* buildTrie(vector<string>& words)
+    {
+        TrieNode* root = new TrieNode();
+        for (auto& w:words)
+        {
+            TrieNode* curr = root;
+            for (int i=0;i<w.size();++i)
+            {
+                char c = w[i] - 'a';
+                if(curr->children[c] == nullptr)    curr->children[c] = new TrieNode();
+                curr = curr->children[c];                
+            }
+            curr->word = w;
+        }
+        
+        return root;
+    }
+    
+    void dfs(vector<vector<char>>& board, int i, int j, TrieNode* p, vector<string>& res)
+    {
+        char c = board[i][j];
+        
+        if(c=='*' || !p->children[c-'a'])  return;
+        p = p->children[c-'a'];
+        if(p->word.size() > 0)
+        {
+            res.push_back(p->word);
+            p->word = "";
+        }
+                
+        board[i][j] = '*';
+        
+        if(i>0) dfs(board,i-1,j,p,res);
+        if(j>0) dfs(board,i,j-1,p,res);
+        if(i<board.size()-1)  dfs(board,i+1,j,p,res);
+        if(j<board[0].size()-1)   dfs(board,i,j+1,p,res);
+    
+        board[i][j] = c;
+    
+    } 
+    
+};
+// TC: O(m(4*3^L-1))
+// SC: O(n)

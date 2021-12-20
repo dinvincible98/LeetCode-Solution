@@ -1,0 +1,48 @@
+//C++:
+class Solution {
+public:
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        const int m = heights.size();
+        const int n = heights[0].size();
+        
+        vector<vector<int>> dirs{{1,0},{-1,0},{0,1},{0,-1}};
+        
+        vector<vector<int>> dist(m,vector<int>(n,INT_MAX));
+        dist[0][0] = 0;
+        
+        typedef pair<int,pair<int,int>> pii;  
+        priority_queue<pii,vector<pii>,greater<pii>> pq; // min heap
+        pq.push({0,{0,0}});
+        
+        
+        while (!pq.empty())
+        {
+            auto p = pq.top();
+            pq.pop();
+            int min_dist = p.first, x = p.second.first, y = p.second.second;
+
+            if(x==m-1 && y==n-1)    return min_dist;
+            
+            for (auto& d:dirs)
+            {
+                int r = x + d[0];
+                int c = y + d[1];
+                
+                if(r<0 || c<0 || r>=m || c>=n)  continue;
+                
+                int new_d = max(min_dist,abs(heights[r][c] - heights[x][y]));
+                
+                if(new_d < dist[r][c])
+                {
+                    dist[r][c] = new_d;
+                    pq.push({new_d,{r,c}});
+                }
+            }
+        }
+        
+        return 0;    
+        
+    }
+};
+// TC: O(MN*logMN)
+// SC: O(mn)

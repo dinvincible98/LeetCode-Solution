@@ -1,0 +1,21 @@
+//C++:
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        int left = 0, right = n-1;
+        int sum;
+        
+        while (left < right)
+        {
+            sum = nums[left] + nums[right];
+            if(sum > target)    right--;
+            else if(sum < target)   left++;
+            else    return {left+1, right+1};
+        }
+        
+        return {};
+    }
+};
+// TC: O(n)
+// SC: O(1)

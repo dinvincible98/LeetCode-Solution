@@ -1,0 +1,27 @@
+//C++:
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int left = 0, right = nums.size()-1;
+        
+        while (left < right)
+        {
+            int mid = (left+right)/2;
+            if(nums[mid] < nums[right])     // search in left of mid idx
+            {
+                right = mid;
+            }
+            else if(nums[mid] > nums[right])    // search in right of mid idx
+            {
+                left = mid+1;
+            }
+            else
+                right--;
+        }
+        
+        return nums[left];
+    }
+};
+
+// TC: O(logn)
+// SC: O(1)

@@ -1,0 +1,39 @@
+//C++:
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        unordered_map<double,int> mp;   //<slope,cnt>
+        int max_cnt = 0, same = 1, same_y = 1;
+        
+        for(int i=0;i<points.size();++i)
+        {
+            same = 1, same_y = 1;
+            for (int j=i+1;j<points.size();++j)
+            {
+                if(points[i][1] == points[j][1])
+                {
+                    ++same_y;
+                    if(points[i][0] == points[j][0])    ++same;
+                    
+                }
+                else
+                {
+                    double dx = points[i][0] - points[j][0];
+                    double dy = points[i][1] - points[j][1];
+                    mp[dx/dy]++;
+                }
+            }
+            max_cnt = max(max_cnt,same_y);
+        
+            for (auto& it:mp)
+            {
+                max_cnt = max(max_cnt,same+it.second);
+            }
+            mp.clear();
+        }
+        
+        return max_cnt;
+    }
+};
+// TC: O(n^2)
+// SC: O(n)

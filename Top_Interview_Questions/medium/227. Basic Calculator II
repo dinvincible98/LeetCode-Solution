@@ -1,0 +1,43 @@
+//C++:
+class Solution {
+public:
+    int calculate(string s) {
+        int n = s.size();
+        int curr_num = 0;
+        int last_num = 0;
+        char sign = '+'; 
+        int res = 0;
+        
+        for (int i=0;i<n;++i)
+        {
+            if(isdigit(s[i]))   curr_num = curr_num*10 + (s[i]-'0');    // curr_num
+            if(!isdigit(s[i]) && !iswspace(s[i]) || i==n-1)     // is sign
+            {
+                if(sign=='+' || sign=='-')
+                {
+                    res += last_num;
+                    last_num = sign=='+'? curr_num:-curr_num;
+                }
+                else if (sign == '*')
+                {
+                    last_num *= curr_num;
+                }
+                else 
+                {
+                    last_num /= curr_num;
+                }
+                
+                sign = s[i];
+                curr_num = 0;
+            }
+        }
+        
+        res += last_num;    // add last num to res
+        
+        return res;
+        
+    }
+};
+
+// TC: O(n)
+// SC: O(1)
