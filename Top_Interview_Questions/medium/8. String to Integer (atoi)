@@ -1,0 +1,44 @@
+//C++:
+class Solution {
+public:
+    int myAtoi(string s) {
+        int sign = 1;
+        int res = 0;
+        int idx = 0;
+        int n = s.size();
+        
+        // discard all spaces in the begining
+        while (idx<n && s[idx]==' ')
+        {
+            ++idx;
+        }
+        
+        
+        if(idx<n && s[idx]=='+')
+        {
+            sign = 1;
+            ++idx;
+        }
+        else if (idx<n && s[idx]=='-')
+        {
+            sign = -1;
+            ++idx;
+        }
+        
+        while(idx<n && isdigit(s[idx]))
+        {
+            int digit = s[idx] - '0';
+            
+            if((res>INT_MAX/10) || (res==INT_MAX/10 && digit>INT_MAX%10))   return sign==1? INT_MAX:INT_MIN;
+            
+            res = 10*res + digit;
+            ++idx;
+        }
+        
+        
+        return sign*res;
+    }
+};
+
+// TC: O((n)
+// SC: O(1)

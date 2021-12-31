@@ -1,0 +1,32 @@
+// C++
+class Solution {
+public:
+    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+        int n = products.size();
+        sort(products.begin(),products.end());
+        vector<vector<string>> res;
+        string prefix = "";
+        
+        auto it = products.begin();
+        
+        int idx = 0;
+        for (auto& c:searchWord)
+        {
+            prefix += c;
+            
+            it = lower_bound(it,products.end(),prefix);
+            idx = it - products.begin();
+            
+            res.push_back({});
+            for (int i=idx;i<min(idx+3,n);++i)
+            {
+                if(products[i].find(prefix) != -1)  res.back().push_back(products[i]);
+            }
+        }
+        return res;
+        
+        
+    }
+};
+// TC: O(n)
+// SC: O(1)

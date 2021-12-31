@@ -1,0 +1,38 @@
+// C++
+class Solution {
+public:
+    int findLeastNumOfUniqueInts(vector<int>& arr, int k) {
+        unordered_map<int,int> mp;
+        for (auto& n:arr)
+        {
+            mp[n]++;
+        }
+        
+        
+        priority_queue<int,vector<int>,greater<int>> pq;    // min heap
+        
+        for (auto& it:mp)   pq.push(it.second);
+        
+        
+        while (k)
+        {
+            int cnt = pq.top();
+            pq.pop();
+            
+            if(k < cnt)
+            {
+                cnt -= k;
+                pq.push(cnt);
+                break;
+            }
+            else
+            {
+                k -= cnt;
+            }
+        }
+        
+        return pq.size();
+    }
+};
+// TC: O(nlogn)
+// SC: O(k)

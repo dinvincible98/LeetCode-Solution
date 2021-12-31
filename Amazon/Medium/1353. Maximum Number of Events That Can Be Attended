@@ -1,0 +1,31 @@
+// C++
+class Solution {
+public:
+    int maxEvents(vector<vector<int>>& events) {
+        priority_queue<int,vector<int>,greater<int>> pq;
+        sort(events.begin(),events.end());
+        
+        int i=0, res=0, d=0, n=events.size();
+        while (pq.size()>0 || i<n)
+        {
+            // start with first event
+            if(pq.size() == 0)  d = events[i][0];
+            
+            while (i<n && events[i][0]==d)  pq.push(events[i++][1]);
+            
+            // pop earlies ending day 
+            pq.pop();
+            ++res;  // increase cnt
+            ++d;    // increse day
+            
+            // remove events ending before next day
+            while (pq.size()>0 && pq.top()<d)   pq.pop();
+        }
+        
+        return res;
+        
+        
+    }
+};
+// TC: O(n)
+// SC: O(1)

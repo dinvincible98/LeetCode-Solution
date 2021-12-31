@@ -1,0 +1,27 @@
+//C++:
+class Solution {
+public:
+    double myPow(double x, int n) {
+        long long N = n;
+        if(N < 0)
+        {
+            x = 1/x;
+            N = -N;
+        }
+        
+        double res = 1;
+        double curr_product = x;
+        
+        for (long long i=N; i; i/=2)
+        {
+            if(i%2 == 1)    res *= curr_product;
+            
+            curr_product *= curr_product;
+        }
+        
+        return res;
+    }
+};
+
+// TC: O(logn)
+// SC: O(1)		
